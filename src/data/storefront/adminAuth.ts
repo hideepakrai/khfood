@@ -2,11 +2,11 @@ import "server-only";
 
 import { cookies } from "next/headers";
 
-import { getAuthenticatedAdministratorFromToken, adminPayloadTokenCookieName } from "@/data/storefront/adminAccounts";
+import { getAuthenticatedAdministratorFromToken, adminAuthTokenCookieName } from "@/data/storefront/adminAccounts";
 
 export const getAuthenticatedAdministrator = async () => {
   const cookieStore = await cookies();
-  const token = cookieStore.get(adminPayloadTokenCookieName)?.value;
+  const token = cookieStore.get(adminAuthTokenCookieName)?.value;
 
   if (!token) {
     return null;

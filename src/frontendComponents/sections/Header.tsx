@@ -19,14 +19,14 @@ const socialLinks = [
 ];
 
 const aboutLinks = [
-  { label: "History", href: "/about/history", title: "Our History" },
-  { label: "Nutrition", href: "/about/nutrition", title: "Nutrition" },
-  { label: "Process", href: "/about/process", title: "Our Process" },
+  { label: "History", href: "/en/about/history", title: "Our History" },
+  { label: "Nutrition", href: "/en/about/nutrition", title: "Nutrition" },
+  { label: "Process", href: "/en/about/process", title: "Our Process" },
 ];
 
 const productLinks = [
-  { label: "Domestic (US)", href: "/products/domestic", title: "Domestic Products" },
-  { label: "International (Taiwan)", href: "/products/international", title: "International Products" },
+  { label: "Domestic (US)", href: "/en/products/domestic", title: "Domestic Products" },
+  { label: "International (Taiwan)", href: "/en/products/international", title: "International Products" },
 ];
 
 export default function Header({ className }: HeaderProps) {
@@ -71,10 +71,10 @@ export default function Header({ className }: HeaderProps) {
             <span className="leading-none">Welcome to Khfoods!</span>
 
             <div className="flex items-center gap-5 leading-none">
-              <a href="#" className="hover:opacity-90">
+              <a href="/en/store-locator" className="hover:opacity-90">
                 Store locator
               </a>
-              <a href="#" className="hover:opacity-90">
+              <a href="/en/wholesale" className="hover:opacity-90">
                 Wholesale
               </a>
               <div className="relative">
@@ -129,7 +129,7 @@ export default function Header({ className }: HeaderProps) {
             </div>
 
             <nav className="flex flex-1 items-center justify-center gap-12 text-[14px] font-semibold tracking-[0.04em] text-white">
-              <Link href="/" className="transition-colors hover:text-[#facc15]">
+              <Link href="/en" className="transition-colors hover:text-[#facc15]">
                 HOME
               </Link>
 
@@ -157,17 +157,17 @@ export default function Header({ className }: HeaderProps) {
                 <ChevronDown className="h-3.5 w-3.5 opacity-80" />
               </button>
 
-              <Link href="/contact" className="transition-colors hover:text-[#facc15]">
+              <Link href="/en/contact-us" className="transition-colors hover:text-[#facc15]">
                 CONTACT US
               </Link>
             </nav>
 
             <div className="flex w-[200px] items-center justify-end gap-5 text-[14px] font-semibold tracking-[0.04em] text-white">
-              <Link href="/shop" className="transition-colors hover:text-[#facc15]">
+              <Link href="/en/products" className="transition-colors hover:text-[#facc15]">
                 SHOP
               </Link>
 
-              <Link href="/cart" aria-label="Cart" className="relative inline-flex items-center justify-center">
+              <Link href="/en/cart" aria-label="Cart" className="relative inline-flex items-center justify-center">
                 <ShoppingCart className="h-7 w-7 text-white" />
                 <span className="absolute -right-2 -top-2 inline-flex h-6 min-w-6 items-center justify-center rounded-full bg-[#facc15] px-1 text-[11px] font-bold leading-none text-black">
                   {cartCount}

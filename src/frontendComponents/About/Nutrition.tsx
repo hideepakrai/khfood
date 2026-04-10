@@ -1,243 +1,246 @@
+"use client";
+
 import React from 'react';
-import { Heart, Leaf, Shield, Sparkles } from 'lucide-react';
+import { 
+  Heart, 
+  Leaf, 
+  Shield, 
+  Sparkles, 
+  ChevronRight,
+  Accessibility,
+  Activity,
+  Zap
+} from 'lucide-react';
+import { motion } from 'framer-motion';
+import AboutPageHeader from '@/frontendComponents/sections/AboutPageHeader';
 
 const NutritionPage = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-amber-50 to-white">
-      {/* Hero Section */}
-      {/* <section className="relative h-[70vh] flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-amber-900/90 to-orange-800/90 z-10"></div>
-        <div 
-          className="absolute inset-0 bg-cover bg-center"
-          style={{
-            backgroundImage: "url('https://images.unsplash.com/photo-1608797178974-15b35a64ede9?w=1600&h=900&fit=crop')"
-          }}
-        ></div>
-        <div className="relative z-20 text-center text-white px-4">
-          <p className="text-amber-300 uppercase tracking-widest text-sm mb-4 font-light">Product / Nutrition</p>
-          <h1 className="text-6xl md:text-7xl font-bold mb-6">NUTRITION</h1>
-          <div className="w-24 h-1 bg-amber-300 mx-auto"></div>
-        </div>
-      </section> */}
+    <div className="min-h-screen bg-[#fffcf9] text-slate-900 overflow-hidden">
+      <AboutPageHeader />
 
-      <section
-        className="relative w-full overflow-hidden pt-[120px]"
-        style={{
-          backgroundImage: "url('/assets/Image/bg-banner.png')",
-          backgroundRepeat: "no-repeat",
-          backgroundPosition: "center",
-          backgroundSize: "cover",
-        }}
+      {/* Hero Section - Minimalist & Premium */}
+      <section 
+        className="relative h-[60vh] flex items-center justify-center overflow-hidden bg-slate-900"
       >
-        <div className="mx-auto flex min-h-[260px] max-w-7xl items-center justify-center px-5 py-14 md:min-h-[320px]">
-          <div className="text-center">
-            <h1 className="text-3xl font-bold uppercase md:text-5xl">
-              Nutrition
-            </h1>
-          </div>
+        <div className="absolute inset-0 opacity-25">
+          <img 
+            src="https://khfood.com/wp-content/uploads/2019/11/2Q6A4971.jpg" 
+            className="w-full h-full object-cover"
+            alt="Nutrition Background"
+          />
+        </div>
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent" />
+        
+        <div className="relative z-10 text-center text-white px-4">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1 }}
+            className="inline-block px-6 py-2 rounded-full border border-white/30 backdrop-blur-md mb-8"
+          >
+            <p className="text-[#ecb984] uppercase tracking-[0.5em] text-[10px] md:text-xs font-black">
+              Nourishment & Health
+            </p>
+          </motion.div>
+          
+          <motion.h1 
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+            className="font-heading font-bold uppercase text-white leading-[0.95] text-[48px] sm:text-[80px] md:text-[110px] lg:text-[120px] tracking-tight"
+            style={{ 
+              textShadow: "0 10px 40px rgba(0,0,0,0.4)"
+            }}
+          >
+            NUTRITION
+          </motion.h1>
         </div>
       </section>
       
-
-      {/* Intro Section */}
-      <section className="mx-auto px-4 py-20 bg-white">
-        <div className="text-center  max-w-6xl mx-auto">
-          <p className="text-amber-600 uppercase tracking-wider text-sm font-semibold mb-4">
-            We value our simplicity
-          </p>
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-8">
-            IN BOTH THE PROCESS AND INGREDIENTS
-          </h2>
-          <p className="text-gray-600 text-lg leading-relaxed max-w-4xl mx-auto">
-            Our peanuts are not only delicious and the perfect go-to snack, but they are also extremely healthy and beneficial to our diet. Unlike most snacks, our peanuts are not filled with unhealthy oils and unnatural ingredients. We always emphasize our simplicity in ingredients. People rarely find products that only contain two ingredients, and we are so proud to display our ingredients list. Through our unique roasting process, we do not need any artificial flavorings or preservatives to make our peanuts taste.
-          </p>
-        </div>
-      </section>
-
-      {/* Two Ingredients Section */}
-      <section className="bg-[#070707] py-20">
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="text-center mb-16">
-            <p className="text-amber-400 uppercase tracking-wider text-sm font-semibold mb-4">
-              Two Ingredients
-            </p>
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-              NOTHING MORE, IT'S THAT SIMPLE
-            </h2>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
-            {/* Salt Card */}
-            <div className="bg-white rounded-2xl overflow-hidden transform hover:scale-105 transition-transform duration-300">
-              <div className="h-64 bg-gray-900 overflow-hidden">
-                <img 
-                  src="https://images.unsplash.com/photo-1584949091598-c31daaaa4aa9?w=600&h=400&fit=crop"
-                  alt="Sea salt on wooden spoon"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <div className="p-8 text-center">
-                <h3 className="text-3xl font-bold  mb-4">SALT</h3>
-                <p className="text-gray-600 text-lg leading-relaxed">
-                  Only a dash of natural sea salt is added into our peanuts so they won't taste unnaturally salty and has just the right amount of flavor.
-                </p>
-              </div>
-            </div>
-
-            {/* Peanuts Card */}
-            <div className="bg-white rounded-2xl overflow-hidden transform hover:scale-105 transition-transform duration-300">
-              <div className="h-64 bg-gray-900 overflow-hidden">
-                <img 
-                  src="https://images.unsplash.com/photo-1651004276154-0e42a8b98e2b?w=600&h=400&fit=crop"
-                  alt="Fresh peanuts"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <div className="p-8 text-center">
-                <h3 className="text-3xl font-bold  mb-4">PEANUTS</h3>
-                <p className="text-gray-600  text-lg leading-relaxed">
-                  Freshly roasted in our industry, peanuts are shipped on a regular basis to guarantee that only the most recent peanuts are packaged.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Nutrition Benefits Section */}
-      <section className="max-w-6xl mx-auto px-4 py-20">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
-          <div>
-            <p className="text-amber-600 uppercase tracking-wider text-sm font-semibold mb-4">
-              Nutrition
-            </p>
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-              NUTRITION
-            </h2>
-            <div className="space-y-4 text-gray-700 leading-relaxed">
-              <p>
-                Peanuts are packed with rich nutrients like protein, minerals, antioxidants, and fiber. Not only that, peanuts also contain a high amount of healthy fats. A common misconception is that fats are unhealthy and lead to weight gain. What most people fail to realize is that there are multiple different types of fats. While some fats, like trans fat, can damage our health, others, like unsaturated fat, have many functions in helping our diet.
-              </p>
-              <p>
-                Fortunately, peanuts are 80% unsaturated fat! Unsaturated fats are actually essential to our health and are commonly used for energy and has also been known to help reduce cholesterol levels. People who are trying to lose weight or change their diet, often swap their unhealthy desserts with peanuts to help reduce cravings and curb their appetite.
+      {/* Philosophy Section */}
+      <section className="py-24 md:py-32 bg-white relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-1/3 h-full bg-amber-50/50 skew-x-[-12deg] translate-x-1/2" />
+        <div className="max-w-7xl mx-auto px-6 relative z-10">
+          <div className="grid lg:grid-cols-12 gap-16 items-center">
+            <div className="lg:col-span-12 text-center max-w-4xl mx-auto">
+              <span className="uppercase tracking-widest text-xs font-bold text-[#ecb984] mb-3 block">
+                Our Philosophy
+              </span>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold uppercase leading-tight text-slate-950 mb-8">
+                SIMPLICITY IS THE ULTIMATE <br /> <span className="text-[#ecb984]">SOPHISTICATION</span>
+              </h2>
+              <p className="text-slate-500 text-lg md:text-xl leading-relaxed font-medium">
+                Our peanuts are not only delicious and the perfect go-to snack, but they are also extremely healthy.
+                Unlike mass-produced alternatives, we never compromise on our ingredients.
               </p>
             </div>
-          </div>
-          <div className="relative">
-            <img 
-              src="/khfood-img.png"
-              alt="Growing plant"
-              className="rounded-2xl shadow-2xl"
-            />
+            
+            <div className="lg:col-span-12 grid md:grid-cols-2 gap-8 mt-12">
+               {/* Two Ingredients Spotlight */}
+              <IngredientCard 
+                title="SEA SALT"
+                description="Only a dash of natural sea salt is added into our peanuts so they won't taste unnaturally salty and has just the right amount of flavor."
+                image="https://images.unsplash.com/photo-1584949091598-c31daaaa4aa9?w=800&q=80"
+                delay={0.2}
+              />
+              <IngredientCard 
+                title="PREMIUM PEANUTS"
+                description="Freshly roasted in our industry, our peanuts are shipped on a regular basis to guarantee that only the most recent peanuts are packaged."
+                image="https://images.unsplash.com/photo-1651004276154-0e42a8b98e2b?w=800&q=80"
+                delay={0.4}
+              />
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Health Benefits Section */}
-      <section className="bg-gradient-to-b from-amber-50 to-white py-20">
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="text-center mb-16">
-            <p className="text-amber-600 uppercase tracking-wider text-sm font-semibold mb-4">
-              Health
-            </p>
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-              WHAT ARE THE HEALTH BENEFITS OF EATING PEANUTS?
-            </h2>
-            <p className="text-gray-700 text-lg leading-relaxed max-w-4xl mx-auto">
-              According to Harvard Medical School's Health Publishing, peanuts along with other tree nuts, help reduce the chance of heart disease or any fatal death causing diseases. This fulfilling snack is perfect for people to enjoy on a regular basis with guilt free happiness.
-            </p>
-          </div>
-
-          {/* Benefits Grid */}
-          <div className="grid md:grid-cols-2 gap-8 mb-16">
-            <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow">
-              <div className="flex items-start gap-4">
-                <div className="bg-amber-100 p-3 rounded-full">
-                  <Heart className="w-6 h-6 text-amber-600" />
-                </div>
-                <div>
-                  <h3 className="text-2xl font-bold text-gray-900 mb-3">A HEALTHY ALTERNATIVE</h3>
-                  <p className="text-gray-700 leading-relaxed">
-                    Peanuts have helped people control both their insulin levels and blood sugar because peanuts are low on sugar. The Diabetic Council recommends individuals diagnosed with diabetes or those who suffer with high insulin levels to eat peanuts because they are low in carbohydrates and high in fiber. Peanuts are a tasty alternative that can replace snacks that contain mostly carbohydrates and sugar.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow">
-              <div className="flex items-start gap-4">
-                <div className="bg-green-100 p-3 rounded-full">
-                  <Leaf className="w-6 h-6 text-green-600" />
-                </div>
-                <div>
-                  <h3 className="text-2xl font-bold text-gray-900 mb-3">NUTRIENT RICH</h3>
-                  <p className="text-gray-700 leading-relaxed">
-                    Packed with protein, healthy fats, vitamins, and minerals, peanuts provide essential nutrients that support overall health and wellbeing. They're an excellent source of energy and help keep you satisfied throughout the day.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Peanut Institute Link */}
-          <div className="bg-white rounded-2xl p-12 shadow-lg text-center">
-            <img 
-              src="https://peanut-institute.com/wp-content/uploads/2021/03/peanut-institute-logo.png"
-              alt="The Peanut Institute"
-              className="h-20 mx-auto mb-6"
-            />
-            <p className="text-gray-700 mb-6">
-              To learn more about the benefits and nutrition of peanuts click on the following link
-            </p>
-            <a 
-              href="https://peanut-institute.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block bg-amber-500 hover:bg-amber-600 text-white font-semibold px-8 py-3 rounded-full transition-colors"
+      {/* The Nutrition Breakdown */}
+      <section className="py-24 md:py-32 bg-[#0a0a0a] text-white">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid lg:grid-cols-2 gap-20 items-center">
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
             >
-              Visit Peanut Institute
-            </a>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold uppercase leading-tight mb-8">
+                80% UNSATURATED <br /> <span className="text-[#ecb984]">ESSENTIAL FATS</span>
+              </h2>
+              <div className="space-y-6 text-gray-400 text-lg leading-relaxed">
+                <p>
+                  Peanuts are packed with rich nutrients like protein, minerals, antioxidants, and fiber. 
+                  Fortunately, peanuts are 80% unsaturated fat! 
+                </p>
+                <p>
+                  Unsaturated fats are actually essential to our health and are commonly used for 
+                  energy and have also been known to help reduce cholesterol levels.
+                </p>
+              </div>
+              
+              <div className="grid grid-cols-2 gap-6 mt-12">
+                <div className="p-6 rounded-3xl bg-white/5 border border-white/10">
+                  <span className="text-[#ecb984] text-4xl font-black block">8g</span>
+                  <span className="text-xs uppercase font-bold tracking-widest text-gray-500">Protein per serving</span>
+                </div>
+                <div className="p-6 rounded-3xl bg-white/5 border border-white/10">
+                  <span className="text-green-500 text-4xl font-black block">0%</span>
+                  <span className="text-xs uppercase font-bold tracking-widest text-gray-500">Trans Fats</span>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Interactive Label Simulation */}
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              className="bg-white text-slate-900 p-8 md:p-12 shadow-2xl rounded-sm font-sans relative"
+            >
+              <div className="absolute top-0 right-0 w-16 h-16 bg-[#ecb984]/10 rounded-bl-full" />
+              <h3 className="text-3xl font-bold border-b-8 border-slate-900 pb-2 mb-2 uppercase">Nutrition Facts</h3>
+              <p className="font-bold border-b border-slate-900 pb-1 mb-2">About 16 servings per container</p>
+              <div className="flex justify-between font-bold text-lg mb-2">
+                <span>Serving size</span>
+                <span>1 oz (28g)</span>
+              </div>
+              <div className="border-t-[12px] border-slate-900 pt-1 mb-1">
+                <div className="flex justify-between items-end border-b-4 border-slate-900 pb-1 mb-1">
+                  <div>
+                    <span className="text-xs font-black">Amount per serving</span>
+                    <span className="text-3xl font-black block leading-none">Calories</span>
+                  </div>
+                  <span className="text-5xl font-black">170</span>
+                </div>
+              </div>
+              <div className="text-right text-xs font-black border-b border-slate-900 pb-1 mb-1">% Daily Value*</div>
+              <NutritionRow label="Total Fat" value="14g" dv="18%" bold />
+              <NutritionRow label="Saturated Fat" value="2g" dv="10%" nested />
+              <NutritionRow label="Trans Fat" value="0g" nested />
+              <NutritionRow label="Cholesterol" value="0mg" dv="0%" bold />
+              <NutritionRow label="Sodium" value="120mg" dv="5%" bold />
+              <NutritionRow label="Total Carbohydrate" value="5g" dv="2%" bold />
+              <NutritionRow label="Dietary Fiber" value="2g" dv="7%" nested />
+              <NutritionRow label="Total Sugars" value="1g" nested />
+              <NutritionRow label="Protein" value="8g" bold />
+              <div className="border-t-[8px] border-slate-900 pt-2 mt-4 text-[10px] leading-tight">
+                *The % Daily Value (DV) tells you how much a nutrient in a serving of food contributes to a daily diet. 2,000 calories a day is used for general nutrition advice.
+              </div>
+            </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Features Footer */}
-      <section className="bg-gradient-to-r from-amber-400 to-orange-500 py-12">
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            <div className="text-center text-white">
-              <div className="bg-white/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Sparkles className="w-8 h-8" />
-              </div>
-              <h4 className="font-bold mb-2">FREE SHIPPING</h4>
-              <p className="text-sm">All domestic orders</p>
-            </div>
-            <div className="text-center text-white">
-              <div className="bg-white/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Shield className="w-8 h-8" />
-              </div>
-              <h4 className="font-bold mb-2">SECURE PAYMENTS</h4>
-              <p className="text-sm">Confirm</p>
-            </div>
-            <div className="text-center text-white">
-              <div className="bg-white/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Heart className="w-8 h-8" />
-              </div>
-              <h4 className="font-bold mb-2">CUSTOMER PRIORITY</h4>
-              <p className="text-sm">Quick responses</p>
-            </div>
-            <div className="text-center text-white">
-              <div className="bg-white/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Leaf className="w-8 h-8" />
-              </div>
-              <h4 className="font-bold mb-2">MADE WITH LOVE</h4>
-              <p className="text-sm">Best services</p>
-            </div>
+      {/* Health Link Section */}
+      <section className="py-24 bg-white">
+        <div className="max-w-5xl mx-auto px-6 text-center">
+          <div className="w-24 h-24 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-8 text-amber-600">
+            <Zap className="w-10 h-10" />
           </div>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold uppercase text-slate-900 mb-6">EXPLORE MORE <span className="text-[#ecb984]">SCIENCE</span></h2>
+          <p className="text-slate-500 text-lg mb-10 max-w-2xl mx-auto">
+            Discover thousands of peer-reviewed studies on the benefits of daily peanut consumption through the Peanut Institute.
+          </p>
+          <motion.a 
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            href="https://peanut-institute.com/"
+            target="_blank"
+            className="inline-flex items-center gap-3 bg-[#ecb984] hover:bg-[#d8a773] text-slate-950 px-10 py-5 rounded-full font-bold uppercase tracking-widest transition-colors"
+          >
+            Visit Peanut Institute <ChevronRight className="w-5 h-5" />
+          </motion.a>
+        </div>
+      </section>
+
+      {/* Footer Features */}
+      <section className="bg-slate-950 py-20 border-t border-white/5">
+        <div className="max-w-7xl mx-auto px-6 grid grid-cols-2 lg:grid-cols-4 gap-12">
+          <Feature icon={<Shield />} title="Certified Pure" desc="No additives" />
+          <Feature icon={<Activity />} title="Low GI" desc="Stable energy" />
+          <Feature icon={<Heart />} title="Heart Wise" desc="Unsaturated fats" />
+          <Feature icon={<Zap />} title="Energy Dense" desc="High protein" />
         </div>
       </section>
     </div>
   );
 };
+
+const IngredientCard = ({ title, description, image, delay }: any) => (
+  <motion.div 
+    initial={{ opacity: 0, y: 30 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true }}
+    transition={{ duration: 0.8, delay }}
+    className="group relative h-[400px] rounded-[2.5rem] overflow-hidden shadow-2xl"
+  >
+    <img src={image} className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" alt={title} />
+    <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent" />
+    <div className="absolute inset-0 p-10 flex flex-col justify-end">
+      <h3 className="text-3xl font-black text-white mb-4 tracking-tight">{title}</h3>
+      <p className="text-white/70 text-sm leading-relaxed max-w-[300px]">{description}</p>
+    </div>
+  </motion.div>
+);
+
+const NutritionRow = ({ label, value, dv, bold, nested }: any) => (
+  <div className={`flex justify-between py-1 border-b border-slate-900 ${nested ? 'pl-4' : ''} ${bold ? 'font-black' : 'font-medium'} text-sm`}>
+    <div>
+      <span>{label}</span>
+      <span className="ml-1 text-slate-500 font-normal">{value}</span>
+    </div>
+    {dv && <span className="text-slate-900">{dv}</span>}
+  </div>
+);
+
+const Feature = ({ icon, title, desc }: any) => (
+  <div className="text-center group">
+    <div className="w-16 h-16 rounded-3xl bg-white/5 flex items-center justify-center text-[#ecb984] mx-auto mb-6 group-hover:bg-[#ecb984] group-hover:text-slate-950 transition-all duration-500">
+      {React.cloneElement(icon as React.ReactElement<{ className?: string }>, { className: 'w-8 h-8' })}
+    </div>
+    <h4 className="text-white font-black uppercase text-sm tracking-widest mb-1">{title}</h4>
+    <p className="text-gray-500 text-xs font-bold uppercase tracking-wider">{desc}</p>
+  </div>
+);
 
 export default NutritionPage;

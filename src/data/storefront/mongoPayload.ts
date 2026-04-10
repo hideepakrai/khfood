@@ -12,7 +12,7 @@ import { Orders } from "@/data/schemas/Order";
 import { Pages } from "@/data/schemas/Pages";
 import { Payment } from "@/data/schemas/Payment";
 import { Permission } from "@/data/schemas/permission";
-import { Posts } from "@/data/schemas/Post";
+import { Post } from "@/data/schemas/Post";
 import { Presets } from "@/data/schemas/Presets";
 import { ProductCategories } from "@/data/schemas/ProductCategories";
 import { ProductSubCategories } from "@/data/schemas/ProductSubCategories";
@@ -38,7 +38,7 @@ const collectionConfigs: Record<string, CollectionConfig> = {
   pages: Pages,
   payment: Payment,
   permission: Permission,
-  posts: Posts,
+  posts: Post,
   presets: Presets,
   productCategories: ProductCategories,
   productSubCategories: ProductSubCategories,

@@ -2,7 +2,7 @@ import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
 import {
-  adminPayloadTokenCookieName,
+  adminAuthTokenCookieName,
   buildAdministratorIdCandidates,
   clearAdministratorAuthCookie,
   verifyAdministratorSessionToken,
@@ -17,7 +17,7 @@ export async function POST(request: Request) {
     const body = (await request.json().catch(() => ({}))) as { allSessions?: boolean };
     const allSessions = body?.allSessions === true;
     const cookieStore = await cookies();
-    const token = cookieStore.get(adminPayloadTokenCookieName)?.value;
+    const token = cookieStore.get(adminAuthTokenCookieName)?.value;
 
     if (!token) {
       return response;

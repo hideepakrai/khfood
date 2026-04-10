@@ -4,11 +4,7 @@ import { draftMode } from "next/headers";
 import { notFound } from "next/navigation";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
-import PlausibleProvider from "next-plausible";
-import {
-  type ReactNode,
-  unstable_ViewTransition as ViewTransition,
-} from "react";
+import { type ReactNode } from "react";
 
 import "../globals.css";
 
@@ -35,7 +31,7 @@ export default async function RootLayout({
   params: Promise<{ locale: string }>;
   children: ReactNode;
 }) {
-  const { isEnabled } = await draftMode();
+  await draftMode();
   const { locale } = await params;
 
   if (!routing.locales.includes(locale as Locale)) {
@@ -46,35 +42,34 @@ export default async function RootLayout({
 
   const messages = await getMessages({ locale });
 
-  const data = await getSiteSettingsCss("en", 1);
+  let data = "";
+  try {
+    data = await getSiteSettingsCss("en", 1);
+  } catch (e) {
+    // Silently fail if CSS settings not available
+  }
 
   return (
     <html
       className={cn(
         GeistSans.variable,
         GeistMono.variable,
-        "twp overflow-x-clip lg:overflow-y-scroll"
+        "twp overflow-x-clip"
       )}
       lang={locale}
     >
       <head>
         <link href="/favicon.ico" rel="icon" sizes="32x32" />
-        <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
-
-        <link rel="preconnect" href="https://fonts.googleapis.com"/>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" />
-        <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet"/>
-
-        <style>{data}</style>
+        <link
+          href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+          rel="stylesheet"
+        />
+        {data && <style>{data}</style>}
       </head>
       <body className="max-w-screen overflow-x-clip">
         <Providers>
-          <GoogleAnalytics ga_id={process.env.NEXT_PUBLIC_GA_ID || "G-XXXXXXX"} />
-          <PlausibleProvider
-            domain="ecommerce.mandala.sh"
-            selfHosted={true}
-            customDomain="plausible.pimento.cloud"
-          />
           <NextIntlClientProvider locale={locale} messages={messages}>
             {children}
             <Footer />
@@ -90,7 +85,8 @@ export const metadata: Metadata = {
     template: "%s | KH Foods",
     default: "KH Foods | Highest Quality Roasted Peanuts",
   },
-  description: "Experience the world's finest roasted peanuts and snacks from KH Foods. Quality since 1990.",
+  description:
+    "Experience the world's finest roasted peanuts and snacks from KH Foods. Quality since 1990.",
   metadataBase: new URL(getServerSideURL()),
   openGraph: mergeOpenGraph(),
   twitter: {

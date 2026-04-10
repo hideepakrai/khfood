@@ -6,7 +6,7 @@ import {
   buildAdministratorSession, 
   signAdministratorSessionToken, 
   setAdministratorAuthCookie,
-  adminPayloadTokenCookieName
+  adminAuthTokenCookieName
 } from "@/data/storefront/adminAccounts";
 import { getMongoDb } from "@/data/mongo/client";
 

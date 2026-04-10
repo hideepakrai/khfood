@@ -3,15 +3,15 @@ import { defineRouting } from "next-intl/routing";
 
 export const routing = defineRouting({
   // A list of all locales that are supported
-  locales: ["en", "zh"],
+  locales: ["en", "zh", "hr"],
 
   // Used when no locale matches
   defaultLocale: "en",
 
   localeDetection: true,
   
-  // Remove locale prefix from URLs for default locale
-  localePrefix: "as-needed"
+  // Always include locale prefix in URLs
+  localePrefix: "always"
 });
 
 // Lightweight wrappers around Next.js' navigation APIs

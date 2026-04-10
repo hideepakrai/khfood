@@ -17,7 +17,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Link } from "@/i18n/routing";
+import Link from "next/link";
 import { MediaDropzone } from "@/components/admin-next/MediaDropzone";
 
 export default function AdminMediaPage() {

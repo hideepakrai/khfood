@@ -15,7 +15,7 @@ import {
 } from "lucide-react";
 
 import { getMongoDb } from "@/data/mongo/client";
-import { getAuthenticatedAdministratorFromToken, adminPayloadTokenCookieName } from "@/data/storefront/adminAccounts";
+import { getAuthenticatedAdministratorFromToken, adminAuthTokenCookieName } from "@/data/storefront/adminAccounts";
 
 export const dynamic = "force-dynamic";
 
@@ -43,7 +43,7 @@ async function getAdminData() {
 
 export default async function AdminDashboardPage() {
   const cookieStore = await cookies();
-  const token = cookieStore.get(adminPayloadTokenCookieName)?.value;
+  const token = cookieStore.get(adminAuthTokenCookieName)?.value;
   
   const admin = token ? await getAuthenticatedAdministratorFromToken(token) : null;
 

@@ -2,14 +2,14 @@ import { put } from "@vercel/blob";
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { getMongoDb } from "@/data/mongo/client";
-import { getAuthenticatedAdministratorFromToken, adminPayloadTokenCookieName } from "@/data/storefront/adminAccounts";
+import { getAuthenticatedAdministratorFromToken, adminAuthTokenCookieName } from "@/data/storefront/adminAccounts";
 
 export const runtime = "nodejs";
 
 export async function POST(request: Request): Promise<NextResponse> {
   try {
     const cookieStore = await cookies();
-    const token = cookieStore.get(adminPayloadTokenCookieName)?.value;
+    const token = cookieStore.get(adminAuthTokenCookieName)?.value;
     
     // Auth Check
     const admin = token ? await getAuthenticatedAdministratorFromToken(token) : null;

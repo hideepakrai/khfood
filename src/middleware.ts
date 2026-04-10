@@ -10,7 +10,7 @@ const intlMiddleware = createMiddleware(routing);
 export async function middleware(req: NextRequest) {
 
   const { pathname } = req.nextUrl;
-  const pathWithoutLocale = pathname.replace(/^\/(en|pl|hr)/, "");
+  const pathWithoutLocale = pathname.replace(/^\/(en|zh|hr)/, "");
   
   /**
    * --- Authentication & Protection ---
@@ -79,7 +79,7 @@ export async function middleware(req: NextRequest) {
 export const config = {
   matcher: [
     "/",
-    "/(pl|en|hr)/:path*",
+    "/(en|zh|hr)/:path*",
     "/((?!api|_next|next|admin|route|proxy|.*\\..*).*)",
   ]
 };

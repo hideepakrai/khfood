@@ -10,13 +10,13 @@ import { ComponentItem } from "./Override/ComponentItems";
 import { useState } from "react";
 
 // Create a wrapper component that provides context to all overrides
-function PuckWrapper({ data, mode }) {
+function PuckWrapper({ data, mode }: { data?: any; mode?: string }) {
   return (
     <TabProvider>
       <Puck
         overrides={{
           puck: () => <PuckComponent mode={mode} data={data} />,
-          actionBar: ({ children, label, parentAction }) => (
+          actionBar: ({ children, label, parentAction }: any) => (
             <Bar
               label={label}
               parentAction={parentAction}
@@ -24,7 +24,7 @@ function PuckWrapper({ data, mode }) {
             />
           ),
           fieldTypes: {
-            object: ({ children, name, field, value, onChange }) => {
+            object: ({ children, name, field, value, onChange }: any) => {
               const [isOpen, setIsOpen] = useState(false);
 
               return (
@@ -67,7 +67,7 @@ function PuckWrapper({ data, mode }) {
               );
             }
           },
-          componentItem: ({ name, children }) => <ComponentItem name={name} />
+          componentItem: ({ name, children }: any) => <ComponentItem name={name} />
         }}
         config={config}
         data={data && data["Page Data"] ? data["Page Data"] : {}}
@@ -76,6 +76,6 @@ function PuckWrapper({ data, mode }) {
   );
 }
 
-export function Editor({ mode, data }) {
+export function Editor({ mode, data }: { mode?: string; data?: any }) {
   return <PuckWrapper mode={mode} data={data} />;
 }

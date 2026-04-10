@@ -1,261 +1,265 @@
 "use client";
 
-import { Heart, Truck, Users } from "lucide-react";
-import { motion } from "motion/react";
-import { useState } from "react";
-import { MdLockOutline } from "react-icons/md";
+import React, { useState, useRef } from "react";
+import { 
+  motion, 
+  useScroll, 
+  useTransform, 
+  AnimatePresence 
+} from "framer-motion";
+import { 
+  Truck, 
+  Leaf, 
+  Flame, 
+  Home, 
+  ShieldCheck, 
+  ArrowRight,
+  ChevronDown
+} from "lucide-react";
+import AboutPageHeader from "@/frontendComponents/sections/AboutPageHeader";
 
-const steps = [
+/* -------------------------------------------------------------------------- */
+/*                               DATA                                          */
+/* -------------------------------------------------------------------------- */
+
+const processSteps = [
   {
-    id: 1,
-    label: "Step 01",
-    title: "Peanuts are grown in East-Southern states",
-    short: "Grown on farms",
-    icon: "🌱"
+    id: "01",
+    title: "Sustainably Grown",
+    subtitle: "Originating in East-Southern Farms",
+    description: "Our journey begins in the rich soil of East-Southern states, where we source only the finest, sustainably grown peanuts.",
+    icon: <Leaf className="w-8 h-8" />,
+    image: "https://images.unsplash.com/photo-1599596081534-19062363116a?w=1200&q=80",
+    color: "bg-emerald-500",
   },
   {
-    id: 2,
-    label: "Step 02",
-    title: "Delivered to Los Angeles",
-    short: "Shipped to LA",
-    icon: "🚚"
+    id: "02",
+    title: "Selection & Transport",
+    subtitle: "Quality Check in Los Angeles",
+    description: "Every batch is transported to our Los Angeles facility under temperature-controlled conditions to preserve natural oils.",
+    icon: <Truck className="h-8 w-8" />,
+    image: "https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=1200&q=80",
+    color: "bg-blue-500",
   },
   {
-    id: 3,
-    label: "Step 03",
-    title: "Freshly roasted in our factory",
-    short: "Freshly roasted",
-    icon: "🔥"
+    id: "03",
+    title: "Artisanal Roasting",
+    subtitle: "Precision Mastery Since 1991",
+    description: "We use a proprietary small-batch roasting method that locks in crunch and flavor without any artificial additives.",
+    icon: <Flame className="h-8 w-8" />,
+    image: "https://images.unsplash.com/photo-1544434261-29e2954a2f8b?w=1200&q=80",
+    color: "bg-amber-600",
   },
   {
-    id: 4,
-    label: "Step 04",
-    title: "Delivered to your home",
-    short: "Delivered to you",
-    icon: "🏠"
+    id: "04",
+    title: "Eco-Friendly Delivery",
+    subtitle: "Straight to Your Doorstep",
+    description: "Freshly packed in nitrogen-flushed packages to ensure they reach you exactly as they left our roasters.",
+    icon: <Home className="h-8 w-8" />,
+    image: "https://khfood.com/wp-content/uploads/2019/12/Image-1.jpg",
+    color: "bg-indigo-500",
   },
 ];
 
- const features = [
-    {
-      icon: <Truck size={32} />,
-      title: "Free Shipping",
-      subtitle: "Fast delivery for all domestic orders",
-    },
-    {
-      icon: <MdLockOutline size={32} />,
-      title: "Secure Payments",
-      subtitle: "Safe & encrypted checkout",
-    },
-    {
-      icon: <Users size={32} />,
-      title: "Customer Priority",
-      subtitle: "Dedicated support & quick responses",
-    },
-    {
-      icon: <Heart size={32} />,
-      title: "Made with Love",
-      subtitle: "Premium quality & trusted service",
-    },
-  ];
+/* -------------------------------------------------------------------------- */
+/*                            COMPONENTS                                       */
+/* -------------------------------------------------------------------------- */
 
 const Page = () => {
-  const [activeStep, setActiveStep] = useState(steps[0]);
+  const [activeStep, setActiveStep] = useState(0);
+  const containerRef = useRef(null);
 
   return (
-    <section className="bg-gradient-to-b from-amber-50 to-white py-12 md:py-20">
-      <div className="mx-auto max-w-7xl px-4">
-        {/* Heading */}
-        <div className="mb-10 text-center md:mb-14">
-          <p className="text-sm font-semibold uppercase tracking-[0.25em] text-amber-700">
-            Process
-          </p>
-          <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 md:text-4xl">
-            From Farm to Your Home
-          </h2>
-          <p className="mx-auto mt-3 max-w-2xl text-sm md:text-base text-slate-600">
-            Follow the journey of our peanuts, from East-Southern farms to fresh
-            roasting in California and delivery to your doorstep.
-          </p>
+    <div className="min-h-screen bg-slate-50 text-slate-900 overflow-hidden" ref={containerRef}>
+      <AboutPageHeader />
+
+      {/* Hero: Immersive Visuals */}
+      <section className="relative h-[80vh] flex items-center justify-center overflow-hidden bg-slate-900">
+        <div className="absolute inset-0 z-0">
+          <motion.div 
+            initial={{ scale: 1.1 }}
+            animate={{ scale: 1 }}
+            transition={{ duration: 10, repeat: Infinity, repeatType: "reverse" }}
+            className="w-full h-full"
+          >
+            <img 
+              src="https://khfood.com/wp-content/uploads/2019/12/Image-1.jpg" 
+              className="w-full h-full object-cover opacity-50"
+              alt="Process Background"
+            />
+          </motion.div>
+          <div className="absolute inset-0 bg-gradient-to-b from-slate-900/40 via-transparent to-slate-50" />
         </div>
 
-        {/* Main content */}
-        <div className="grid gap-10 md:grid-cols-2 md:items-center">
-          {/* Left: visual + timeline */}
-          <div>
-            {/* Visual card with motion */}
-            <motion.div
-              className="relative overflow-hidden rounded-3xl bg-gradient-to-tr from-amber-600 via-amber-500 to-orange-400 p-6 shadow-xl"
-              initial={{ opacity: 0, y: 20, scale: 0.97 }}
-              whileInView={{ opacity: 1, y: 0, scale: 1 }}
-              viewport={{ once: true, amount: 0.4 }}
-              transition={{ duration: 0.6, ease: "easeOut" }}
-            >
-              <div className="relative z-10">
-                <p className="text-xs font-semibold uppercase tracking-[0.25em] text-amber-100">
-                  K H Food
-                </p>
-                <h3 className="mt-3 text-2xl font-semibold text-white">
-                  The Peanut Journey
-                </h3>
-                <p className="mt-2 text-sm text-amber-100/90">
-                  Every batch is freshly roasted in our California factory to
-                  bring out the best flavor and crunch.
-                </p>
-
-                {/* Animated icon  */}
-                <motion.div
-                  className="mt-6 inline-flex items-center gap-3 rounded-full bg-amber-100/10 px-4 py-2 backdrop-blur"
-                  animate={{ x: [0, 6, 0] }}
-                  transition={{ duration: 3, repeat: Infinity }}
-                >
-                  <span className="text-lg">🚚</span>
-                  <span className="text-xs font-medium text-amber-50">
-                    Fresh batches on the move
-                  </span>
-                </motion.div>
-
-                {/* Progress indicator */}
-                <div className="mt-8 flex items-center gap-3 text-xs font-medium text-amber-100">
-                  <span>{activeStep.label}</span>
-                  <div className="h-[2px] flex-1 rounded-full bg-amber-200/40">
-                    <motion.div
-                      className="h-[2px] rounded-full bg-white"
-                      layout
-                      initial={false}
-                      style={{
-                        width: `${(activeStep.id / steps.length) * 100}%`
-                      }}
-                    />
-                  </div>
-                  <span>
-                    {activeStep.id}/{steps.length}
-                  </span>
-                </div>
-
-                <p className="mt-3 text-sm font-semibold text-white">
-                  {activeStep.short}
-                </p>
-              </div>
-
-              {/* Background peanuts / shapes */}
-              <div className="pointer-events-none absolute -right-10 top-6 h-32 w-32 rounded-full bg-amber-300/30 blur-3xl" />
-              <div className="pointer-events-none absolute -bottom-16 left-8 h-40 w-40 rounded-full bg-orange-400/40 blur-3xl" />
-            </motion.div>
-
-            {/* Horizontal stepper */}
-            <motion.div
-              className="mt-8"
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.4 }}
-              transition={{ duration: 0.5 }}
-            >
-              <div className="flex gap-4 rounded-2xl bg-white/80 p-3 shadow-sm ring-1 ring-amber-100">
-                {steps.map((step) => {
-                  const isActive = step.id === activeStep.id;
-                  return (
-                    <button
-                      key={step.id}
-                      onClick={() => setActiveStep(step)}
-                      className={`relative flex flex-1 flex-col items-start rounded-xl px-4 py-3 text-left transition-all ${
-                        isActive
-                          ? "bg-amber-600 text-white shadow-md"
-                          : "bg-white text-slate-800 hover:bg-amber-50"
-                      }`}
-                    >
-                      {isActive && (
-                        <motion.span
-                          layoutId="active-pill"
-                          className="pointer-events-none absolute inset-0 rounded-xl border border-amber-300/80"
-                          transition={{
-                            type: "spring",
-                            stiffness: 320,
-                            damping: 30,
-                          }}
-                        />
-                      )}
-                      <span className="relative z-10 text-xl">{step.icon}</span>
-                      <span className="relative z-10 mt-2 text-xs font-semibold uppercase tracking-[0.2em]">
-                        {step.label}
-                      </span>
-                      <span className="relative z-10 mt-1 text-sm font-medium">
-                        {step.short}
-                      </span>
-                    </button>
-                  );
-                })}
-              </div>
-            </motion.div>
-          </div>
-
-          {/* Right: detailed step description */}
-          <div className="space-y-8">
-            {/* Active step detail */}
-            <motion.div
-              key={activeStep.id}
-              className="rounded-3xl bg-white/80 p-6 shadow-sm ring-1 ring-amber-100"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.35 }}
-            >
-              <p className="text-xs font-semibold uppercase tracking-[0.25em] text-amber-700">
-                {activeStep.label}
-              </p>
-              <h3 className="mt-2 text-xl font-semibold text-slate-900">
-                {activeStep.title}
-              </h3>
-              <p className="mt-3 text-sm text-slate-600">
-                From carefully selected farms to controlled roasting conditions,
-                every step is designed to protect freshness, crunch, and flavor.
-              </p>
-              <ul className="mt-4 space-y-2 text-sm text-slate-600">
-                <li className="flex items-start gap-2">
-                  <span className="mt-1 h-1.5 w-1.5 rounded-full bg-amber-500" />
-                  <span>
-                    Strict quality checks at each stage of the journey.
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="mt-1 h-1.5 w-1.5 rounded-full bg-amber-500" />
-                  <span>
-                    Roasted in small batches in our California facility.
-                  </span>
-                </li>
-              </ul>
-            </motion.div>
-
-            {/* Small story line */}
-            <p className="text-xs text-slate-500">
-              K H Food has been roasting peanuts in Orange County, California
-              since 1991, always focused on delivering the highest quality in
-              every pack.
+        <div className="relative z-10 text-center px-6 max-w-4xl">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1 }}
+            className="inline-block px-6 py-2 rounded-full border border-white/30 backdrop-blur-md mb-8"
+          >
+            <p className="text-[#ecb984] uppercase tracking-[0.5em] text-[10px] md:text-xs font-black">
+              Quality Without Compromise
             </p>
+          </motion.div>
+          <motion.h1 
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+            className="font-heading font-bold uppercase text-white leading-[0.95] text-[48px] sm:text-[80px] md:text-[110px] lg:text-[120px] tracking-tight"
+            style={{ 
+              textShadow: "0 10px 40px rgba(0,0,0,0.4)"
+            }}
+          >
+            FARM TO  <span className="text-[#ecb984]">HOME</span>
+          </motion.h1>
+          <p className="mt-8 text-lg md:text-xl text-slate-600 font-medium max-w-2xl mx-auto">
+            Experience the journey of the perfect peanut. From sunlight and soil to your kitchen table.
+          </p>
+          <div className="mt-12 flex justify-center">
+            <motion.div 
+              animate={{ y: [0, 10, 0] }}
+              transition={{ duration: 2, repeat: Infinity }}
+              className="w-10 h-10 rounded-full border border-slate-200 flex items-center justify-center text-slate-400"
+            >
+              <ChevronDown className="w-5 h-5" />
+            </motion.div>
           </div>
         </div>
+      </section>
 
-        <div className="w-full bg-white py-16">
-          <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
-            {features.map((item, index) => (
-              <div
-                key={index}
-                className="flex flex-col items-center text-center p-6 rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.08)] hover:shadow-[0_6px_28px_rgba(0,0,0,0.12)] transition-all duration-300 bg-white"
-              >
-                <div className="w-16 h-16 flex items-center justify-center rounded-full bg-[#F4E5D2] text-[#8C2C1A] mb-4 shadow">
-                  {item.icon}
-                </div>
-
-                <h3 className="text-xl font-semibold text-gray-800">
-                  {item.title}
-                </h3>
-
-                <p className="text-gray-500 mt-1 text-sm">{item.subtitle}</p>
+      {/* Main Process Storyboard */}
+      <section className="py-24 md:py-40 bg-slate-50 relative">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid lg:grid-cols-12 gap-12 lg:gap-24">
+            
+            {/* Sticky Navigation Sidebar */}
+            <div className="lg:col-span-4 lg:sticky lg:top-32 h-fit">
+              <div className="space-y-4">
+                {processSteps.map((step, index) => (
+                  <button
+                    key={step.id}
+                    onClick={() => setActiveStep(index)}
+                    className={`w-full group text-left p-6 rounded-[2rem] transition-all duration-500 border ${
+                      activeStep === index 
+                      ? 'bg-white shadow-2xl border-transparent scale-105' 
+                      : 'border-slate-200 hover:border-amber-200 bg-transparent'
+                    }`}
+                  >
+                    <div className="flex items-center gap-4">
+                      <span className={`text-xl font-black transition-colors ${
+                        activeStep === index ? 'text-[#ecb984]' : 'text-slate-300'
+                      }`}>
+                        {step.id}
+                      </span>
+                      <div>
+                        <h3 className={`text-lg font-bold transition-colors ${
+                          activeStep === index ? 'text-slate-900' : 'text-slate-500 group-hover:text-slate-700'
+                        }`}>
+                          {step.title}
+                        </h3>
+                        <p className={`text-xs font-bold uppercase tracking-wider transition-colors ${
+                          activeStep === index ? 'text-[#ecb984]' : 'text-slate-400'
+                        }`}>
+                          {step.subtitle}
+                        </p>
+                      </div>
+                    </div>
+                  </button>
+                ))}
               </div>
-            ))}
+
+              <div className="mt-12 p-8 rounded-[2.5rem] bg-slate-900 text-white relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-24 h-24 bg-[#ecb984]/10 rounded-bl-full" />
+                <h4 className="text-xl font-bold uppercase mb-4">Did You Know?</h4>
+                <p className="text-slate-400 text-sm leading-relaxed">
+                  Our roasting process is supervised by master roasters who have been with KH Food for over 20 years.
+                </p>
+              </div>
+            </div>
+
+            {/* Dynamic Content Area */}
+            <div className="lg:col-span-8 min-h-[600px] relative">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeStep}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  transition={{ duration: 0.6 }}
+                  className="space-y-12"
+                >
+                  <div className="relative aspect-video rounded-[3rem] overflow-hidden shadow-2xl">
+                    <img 
+                      src={processSteps[activeStep].image} 
+                      className="w-full h-full object-cover" 
+                      alt={processSteps[activeStep].title}
+                    />
+                    <div className={`absolute top-8 right-8 w-16 h-16 ${processSteps[activeStep].color} rounded-full flex items-center justify-center text-white shadow-xl`}>
+                      {processSteps[activeStep].icon}
+                    </div>
+                  </div>
+
+                  <div className="max-w-3xl">
+                    <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold uppercase text-slate-950 leading-tight mb-8">
+                      {processSteps[activeStep].title}
+                    </h2>
+                    <p className="text-2xl text-slate-600 leading-relaxed font-medium mb-10">
+                      {processSteps[activeStep].description}
+                    </p>
+                    <div className="grid md:grid-cols-2 gap-6">
+                      <div className="p-8 rounded-[2rem] bg-white border border-slate-100 shadow-xl">
+                        <ShieldCheck className="w-8 h-8 text-[#ecb984] mb-4" />
+                        <h4 className="font-bold mb-2">Quality Guarantee</h4>
+                        <p className="text-sm text-slate-500">Every single nut is scanned for perfection before being packaged.</p>
+                      </div>
+                      <div className="p-8 rounded-[2rem] bg-white border border-slate-100 shadow-xl">
+                        <Truck className="w-8 h-8 text-[#ecb984] mb-4" />
+                        <h4 className="font-bold mb-2">Swift Transit</h4>
+                        <p className="text-sm text-slate-500">We ship from our roaster within 24 hours of production.</p>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+
+      {/* Modern CTA */}
+      <section className="py-24 md:py-40 bg-amber-50 border-t border-amber-100">
+        <div className="max-w-7xl mx-auto px-6 text-center">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold uppercase text-slate-950 mb-10 leading-tight">
+              READY TO <span className="text-[#ecb984]">EXPERIENCE?</span>
+            </h2>
+            <p className="text-xl text-slate-600 font-medium mb-12 max-w-2xl mx-auto">
+              Our small-batch peanuts sell out quickly. Join our legacy and taste the difference today.
+            </p>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
+              <a 
+                href="/shop" 
+                className="group relative inline-flex items-center justify-center bg-slate-950 text-white px-12 py-6 rounded-full font-black uppercase tracking-widest overflow-hidden transition-all duration-300 hover:scale-105 active:scale-95"
+              >
+                <span className="relative z-10 transition-transform group-hover:-translate-x-2">Explore the Shop</span>
+                <ArrowRight className="w-5 h-5 absolute right-6 opacity-0 translate-x-4 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0" />
+              </a>
+              <a 
+                href="/about/history" 
+                className="text-slate-950 font-black uppercase tracking-widest hover:text-amber-700 transition-colors"
+              >
+                Read Our Story
+              </a>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+    </div>
   );
 };
 

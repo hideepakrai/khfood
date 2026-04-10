@@ -281,7 +281,6 @@ export default function Header() {
 
           <Link href="/store-locator" className="hover:text-foreground text-[#323131] font-medium hover:text-white">
             Store locator
-            
           </Link>
 
           <Separator  className="h-4" />
@@ -290,7 +289,7 @@ export default function Header() {
 
           <Separator  className="h-4" />
 
-          <Link href="#" className="hover:text-foreground text-[#323131] font-medium hover:text-white">
+          <Link href="/wholesale" className="hover:text-foreground text-[#323131] font-medium hover:text-white">
              Wholesale
           </Link>
 
@@ -493,7 +492,7 @@ export default function Header() {
             </div> */}
 
             <Link
-              href="/shop"
+              href="/products"
               onClick={() => setOpenMega(null)}
               className={`hidden lg:inline-flex text-sm font-semibold tracking-wide ${
                 isMegaOpen ? "text-black hover:text-black/70" : "text-white hover:text-[#FFD100]"

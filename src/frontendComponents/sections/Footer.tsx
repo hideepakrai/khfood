@@ -45,28 +45,28 @@ export function Footer() {
           <div>
             <h3 className="mb-4 text-[16px] font-medium uppercase text-white/80">QUICK LINKS</h3>
             <ul className="space-y-2.5 text-[14px] text-white/70">
-              <li><Link className="hover:text-[#FFD100]" href="/">Home</Link></li>
-              <li><Link className="hover:text-[#FFD100]" href="/faq">FAQs</Link></li>
-              <li><Link className="hover:text-[#FFD100]" href="/services">Wholesale</Link></li>
-              <li><Link className="hover:text-[#FFD100]" href="/contact">Contact Us</Link></li>
-              <li><Link className="hover:text-[#FFD100]" href="/shop">Store Locator</Link></li>
+              <li><Link className="hover:text-[#FFD100]" href="/en">Home</Link></li>
+              <li><Link className="hover:text-[#FFD100]" href="/en/contact-us">FAQs</Link></li>
+              <li><Link className="hover:text-[#FFD100]" href="/en/wholesale">Wholesale</Link></li>
+              <li><Link className="hover:text-[#FFD100]" href="/en/contact-us">Contact Us</Link></li>
+              <li><Link className="hover:text-[#FFD100]" href="/en/store-locator">Store Locator</Link></li>
             </ul>
           </div>
 
           <div>
             <h3 className="mb-4 text-[16px] font-medium uppercase text-white/80">ABOUT US</h3>
             <ul className="space-y-2.5 text-[14px] text-white/70">
-              <li><Link className="hover:text-[#FFD100]" href="/about">History</Link></li>
-              <li><Link className="hover:text-[#FFD100]" href="/about">Nutrition</Link></li>
-              <li><Link className="hover:text-[#FFD100]" href="/about">Process</Link></li>
+              <li><Link className="hover:text-[#FFD100]" href="/en/about/history">History</Link></li>
+              <li><Link className="hover:text-[#FFD100]" href="/en/about/nutrition">Nutrition</Link></li>
+              <li><Link className="hover:text-[#FFD100]" href="/en/about/process">Process</Link></li>
             </ul>
           </div>
 
           <div>
             <h3 className="mb-4 text-[16px] font-medium uppercase text-white/80">PRODUCTS</h3>
             <ul className="space-y-2.5 text-[14px] text-white/70">
-              <li><Link className="hover:text-[#FFD100]" href="/shop">Domestic</Link></li>
-              <li><Link className="hover:text-[#FFD100]" href="/shop">International</Link></li>
+              <li><Link className="hover:text-[#FFD100]" href="/en/products/domestic">Domestic</Link></li>
+              <li><Link className="hover:text-[#FFD100]" href="/en/products/international">International</Link></li>
             </ul>
           </div>
 

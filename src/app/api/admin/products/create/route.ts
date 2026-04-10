@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { z } from "zod";
 import { getMongoDb } from "@/data/mongo/client";
-import { getAuthenticatedAdministratorFromToken, adminPayloadTokenCookieName } from "@/data/storefront/adminAccounts";
+import { getAuthenticatedAdministratorFromToken, adminAuthTokenCookieName } from "@/data/storefront/adminAccounts";
 
 // Zod validation schema for Product Creation
 const productSchema = z.object({
@@ -22,7 +22,7 @@ const productSchema = z.object({
 export async function POST(req: Request) {
   try {
     const cookieStore = await cookies();
-    const token = cookieStore.get(adminPayloadTokenCookieName)?.value;
+    const token = cookieStore.get(adminAuthTokenCookieName)?.value;
     
     // Auth Check
     const admin = token ? await getAuthenticatedAdministratorFromToken(token) : null;

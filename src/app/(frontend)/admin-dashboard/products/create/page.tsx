@@ -16,7 +16,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useRouter } from "next/navigation";
-import { Link } from "@/i18n/routing";
+import Link from "next/link";
 import { TaxonomyPicker } from "@/components/admin-next/TaxonomyPicker";
 import { MediaPicker } from "@/components/admin-next/MediaPicker";
 

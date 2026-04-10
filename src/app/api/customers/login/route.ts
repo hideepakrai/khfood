@@ -4,7 +4,7 @@ import { cookies } from "next/headers";
 import { v4 as uuidv4 } from "uuid";
 
 import { getMongoDb } from "@/data/mongo/client";
-import { verifyPayloadPassword } from "@/utilities/auth";
+import { verifyPassword } from "@/utilities/auth";
 
 export async function POST(req: Request) {
   try {
@@ -27,7 +27,7 @@ export async function POST(req: Request) {
      * Verify password using native utility
      * Transitioned from Payload-specific verification
      */
-    const isValid = verifyPayloadPassword(password, rawCustomer.hash, rawCustomer.salt);
+    const isValid = verifyPassword(password, rawCustomer.hash, rawCustomer.salt);
 
     if (!isValid) {
       return NextResponse.json({ message: "Invalid credentials" }, { status: 401 });

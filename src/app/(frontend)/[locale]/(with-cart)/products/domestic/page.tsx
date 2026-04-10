@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React, { useState } from "react";
 import { FaPlus, FaMinus } from "react-icons/fa"; 
-import ProductTires from "./ProductTires";
+import ProductGrid from "./ProductTires";
 import Modelmap from "@/frontendComponents/Home/Modelmap";
 import SliderBrand from "@/frontendComponents/Home/SliderBrand";
 import Uslogo from "@/frontendComponents/Home/Uslogo";
@@ -11,18 +11,6 @@ import Uslogo from "@/frontendComponents/Home/Uslogo";
 // -------------------------------------------------------------------------- 
 // TYPES
 // -------------------------------------------------------------------------- 
-
-type SeriesKey = "UHP" | "FS" | "HP" | "P";
-
-type Product = {
-  name: string;
-  series: SeriesKey;
-  tag: string;
-  price: string;
-  href: string;
-  img: string;
-  specs: { label: string; value: string }[];
-};
 
 type FAQItem = {
   question: string;
@@ -33,12 +21,6 @@ type FAQItem = {
 // CONSTANTS
 // -------------------------------------------------------------------------- 
 
-const TIRE_IMG =
-  "https://goodyear.creativeconsult.co.in/wp-content/uploads/2025/11/Render-Cut-Vector-R-Z30SW-1024x1024.png";
-
-// ======================= UPDATED FOOD FAQs ONLY ======================= 
-
-// ERROR FIXED HERE: Type changed from FAQS[] to FAQItem[]
 const DOMESTIC_FAQS: FAQItem[] = [
   {
     question: "How long does domestic shipping take?",
@@ -66,109 +48,22 @@ const DOMESTIC_FAQS: FAQItem[] = [
 // MAIN COMPONENT
 // -------------------------------------------------------------------------- 
 
-export default function InternationalPage() {
+export default function DomesticProductsPage() {
   
-  // Products Data
-  const products: Product[] = useMemo(
-    () => [
-      {
-        name: "Eagle F1 SuperSport R",
-        series: "UHP",
-        tag: "Race / Pure Speed",
-        price: "$95.00 – $120.00",
-        href: "/shop/eagle-f1-supersport-r",
-        img: TIRE_IMG,
-        specs: [
-          { label: "Air", value: "Tubeless Ready" },
-          { label: "Casing", value: "120tpi" },
-          { label: "Compound", value: "Dynamic UHP" },
-        ],
-      },
-      {
-        name: "Eagle F1R",
-        series: "UHP",
-        tag: "Fast Road / Aero",
-        price: "$90.00 – $110.00",
-        href: "/shop/eagle-f1r",
-        img: TIRE_IMG,
-        specs: [
-          { label: "Air", value: "Tubeless Ready" },
-          { label: "Casing", value: "120tpi" },
-          { label: "Bead", value: "Folding" },
-        ],
-      },
-      {
-        name: "Vector 4Seasons",
-        series: "HP",
-        tag: "All-Season / Endurance",
-        price: "$70.00 – $95.00",
-        href: "/shop/vector-4seasons",
-        img: TIRE_IMG,
-        specs: [
-          { label: "Grip", value: "Wet Focus" },
-          { label: "Protection", value: "Enhanced" },
-          { label: "Use", value: "All-Season" },
-        ],
-      },
-      {
-        name: "Vector R",
-        series: "FS",
-        tag: "Fitment / OEM",
-        price: "$65.00 – $85.00",
-        href: "/shop/vector-r",
-        img: TIRE_IMG,
-        specs: [
-          { label: "Fit", value: "Multiple Sizes" },
-          { label: "Air", value: "Tubeless Ready" },
-          { label: "Bead", value: "Folding" },
-        ],
-      },
-      {
-        name: "Vector Sport",
-        series: "HP",
-        tag: "Road / Sport",
-        price: "$55.00 – $75.00",
-        href: "/shop/vector-sport",
-        img: TIRE_IMG,
-        specs: [
-          { label: "Air", value: "Tubeless Ready" },
-          { label: "Casing", value: "60tpi" },
-          { label: "Use", value: "Training" },
-        ],
-      },
-      {
-        name: "Eagle Sport",
-        series: "P",
-        tag: "Everyday Performance",
-        price: "$45.00 – $60.00",
-        href: "/shop/eagle-sport",
-        img: TIRE_IMG,
-        specs: [
-          { label: "Air", value: "Tubeless Ready" },
-          { label: "Durability", value: "High" },
-          { label: "Use", value: "Daily" },
-        ],
-      },
-    ],
-    []
-  );
-
   return (
     <main className="w-full bg-white text-neutral-900">
       {/* ========================== HERO ========================== */}
       <section
-        className="relative w-full overflow-hidden pt-[105px]"
+        className="relative w-full overflow-hidden pt-[112px]"
         style={{
-          backgroundImage: "url('/usa-logo-flag.png')",
+          backgroundImage: "url('/assets/Image/bg-banner.png')",
           backgroundRepeat: "no-repeat",
           backgroundPosition: "center",
           backgroundSize: "cover",
-          height: "460px",
         }}
       >
         <div className="mx-auto flex min-h-[260px] max-w-7xl items-center justify-center px-5 py-14 sm:px-6 md:min-h-[320px] md:py-20">
-          <div className="text-center grid justify-center ">
-
+          <div className="text-center">
             <h1 className="text-3xl font-bold uppercase tracking-tight text-black md:text-5xl">
               Domestic Products (US) 
             </h1>
@@ -176,17 +71,11 @@ export default function InternationalPage() {
         </div>
       </section>
 
-      {/* <Uslogo /> */}
-
-      <ProductTires />
+      <ProductGrid />
       
       {/* ========================== ModelMap ========================== */}
       <Modelmap />
       
-      {/* <SliderBrand/> */}
-{/* <Uslogo /> */}
-
-
       {/* ========================== FAQ Section ========================== */}
       <FAQSection />
 
@@ -212,7 +101,6 @@ function FAQSection() {
         </div>
 
         <div className="space-y-4">
-          {/* ERROR FIXED HERE: Changed FAQS.map to DOMESTIC_FAQS.map */}
           {DOMESTIC_FAQS.map((faq, idx) => (
             <Accordion key={idx} question={faq.question} answer={faq.answer} />
           ))}
@@ -226,17 +114,19 @@ function Accordion({ question, answer }: { question: string; answer: string }) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="border rounded-xl bg-white">
+    <div className="border rounded-xl bg-white shadow-sm overflow-hidden mb-4">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex items-center justify-between p-5 text-left"
+        className="w-full flex items-center justify-between p-5 text-left hover:bg-neutral-50 transition-colors"
       >
-        <span className="font-semibold">{question}</span>
-        {isOpen ? <FaMinus size={14} /> : <FaPlus size={14} />}
+        <span className="font-semibold text-lg">{question}</span>
+        {isOpen ? <FaMinus size={14} className="text-amber-600" /> : <FaPlus size={14} className="text-gray-400" />}
       </button>
 
       {isOpen && (
-        <p className="p-5 pt-0 text-sm text-neutral-600">{answer}</p>
+        <div className="px-5 pb-5 text-neutral-600 leading-relaxed border-t border-neutral-100 pt-4 animate-in fade-in slide-in-from-top-2 duration-300">
+          {answer}
+        </div>
       )}
     </div>
   );

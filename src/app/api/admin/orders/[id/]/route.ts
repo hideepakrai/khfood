@@ -2,14 +2,14 @@ import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { ObjectId } from "mongodb";
 import { getMongoDb } from "@/data/mongo/client";
-import { getAuthenticatedAdministratorFromToken, adminPayloadTokenCookieName } from "@/data/storefront/adminAccounts";
+import { getAuthenticatedAdministratorFromToken, adminAuthTokenCookieName } from "@/data/storefront/adminAccounts";
 
 // GET Order Details
 export async function GET(req: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
     const { id } = await params;
     const cookieStore = await cookies();
-    const token = cookieStore.get(adminPayloadTokenCookieName)?.value;
+    const token = cookieStore.get(adminAuthTokenCookieName)?.value;
     
     // Auth Check
     const admin = token ? await getAuthenticatedAdministratorFromToken(token) : null;
@@ -39,7 +39,7 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
   try {
     const { id } = await params;
     const cookieStore = await cookies();
-    const token = cookieStore.get(adminPayloadTokenCookieName)?.value;
+    const token = cookieStore.get(adminAuthTokenCookieName)?.value;
     
     // Auth Check
     const admin = token ? await getAuthenticatedAdministratorFromToken(token) : null;

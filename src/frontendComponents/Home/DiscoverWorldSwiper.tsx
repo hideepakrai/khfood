@@ -3,6 +3,14 @@
 import React, { useState } from "react";
 import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination, Autoplay, Navigation } from "swiper/modules";
+
+// Swiper styles
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+import "./swiper-custom.css";
 
 const featuredProjects = [
   {
@@ -82,49 +90,72 @@ export default function DiscoverWorldSwiper() {
           Discover Our World
         </motion.h2>
 
-        <motion.div variants={cardVariants}>
-          <div className="grid gap-6 md:grid-cols-3">
+        <motion.div variants={cardVariants} className="relative">
+          <Swiper
+            modules={[Pagination, Autoplay, Navigation]}
+            spaceBetween={24}
+            slidesPerView={1}
+            breakpoints={{
+              640: {
+                slidesPerView: 2,
+                spaceBetween: 20,
+              },
+              1024: {
+                slidesPerView: 3,
+                spaceBetween: 30,
+              },
+            }}
+            pagination={{
+              clickable: true,
+              dynamicBullets: true,
+            }}
+            autoplay={{
+              delay: 3500,
+              disableOnInteraction: false,
+            }}
+            loop={true}
+            className="pb-14 !px-2"
+          >
             {featuredProjects.map((project, index) => {
               const key = `${project.id}-${index}`;
               const isActive = activeKey === key;
-              const isLast = index === featuredProjects.length - 1;
 
               return (
-                <button
-                  key={key}
-                  type="button"
-                  onClick={() => setActiveKey(key)}
-                  className={[
-                    "relative block overflow-hidden rounded-2xl text-left appearance-none border-0 bg-transparent p-0 shadow-none outline-none focus:outline-none focus:ring-0 active:scale-100",
-                    isLast ? "md:col-start-1" : "",
-                  ].join(" ")}
-                >
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    className="h-[400px] w-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
-                  <div className="absolute bottom-0 left-0 p-8">
-                    <span className="mb-3 inline-block rounded-full bg-[#EAB159] px-3 py-1 text-[10px] font-bold uppercase text-black">
-                      {project.category}
-                    </span>
-                    <h3 className="text-2xl font-bold uppercase text-white">
-                      {project.title}
-                    </h3>
-                    {isActive ? (
-                      <div className="mt-4 flex items-center text-[#EAB159]">
-                        <span className="text-sm font-bold uppercase tracking-widest">
-                          Explore
+                <SwiperSlide key={key}>
+                  <button
+                    type="button"
+                    onClick={() => setActiveKey(key)}
+                    className="group relative block w-full overflow-hidden rounded-2xl text-left appearance-none border-0 bg-transparent p-0 shadow-none outline-none focus:outline-none focus:ring-0 active:scale-[0.98] transition-transform"
+                  >
+                    <div className="relative h-[450px] w-full overflow-hidden">
+                      <img
+                        src={project.image}
+                        alt={project.title}
+                        className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
+                      
+                      <div className="absolute bottom-0 left-0 p-6 md:p-8">
+                        <span className="mb-3 inline-block rounded-full bg-[#EAB159] px-3 py-1 text-[10px] font-bold uppercase text-black">
+                          {project.category}
                         </span>
-                        <ArrowRight className="ml-2 h-5 w-5" />
+                        <h3 className="text-2xl font-bold uppercase text-white tracking-wide">
+                          {project.title}
+                        </h3>
+                        
+                        <div className="mt-4 flex items-center text-[#EAB159] opacity-0 translate-y-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
+                          <span className="text-sm font-bold uppercase tracking-widest">
+                            Explore
+                          </span>
+                          <ArrowRight className="ml-2 h-5 w-5" />
+                        </div>
                       </div>
-                    ) : null}
-                  </div>
-                </button>
+                    </div>
+                  </button>
+                </SwiperSlide>
               );
             })}
-          </div>
+          </Swiper>
         </motion.div>
       </motion.div>
     </section>

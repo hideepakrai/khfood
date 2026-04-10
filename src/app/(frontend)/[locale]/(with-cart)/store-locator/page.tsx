@@ -1,526 +1,347 @@
 "use client";
 
 import * as React from "react";
-import {
-    Search as SearchIcon,
-    MapPin,
-    Heart,
-    Navigation2,
-    ChevronDown,
-    X,
-} from "lucide-react";
-
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-
-
-import Image from "next/image";
-import { ArrowRight, Play, Sparkles, CheckCircle2 } from "lucide-react";
-
-// import { Button } from "@/components/ui/button";
-// import { Badge } from "@/components/ui/badge";
-// import { Input } from "@/components/ui/input";
-import { Card } from "@/components/ui/card";
-
-
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select";
-import { Separator } from "@radix-ui/react-select";
-import { IoLocationOutline } from "react-icons/io5";
+import { MapPin, Navigation2, Phone, Mail, Search, Clock } from "lucide-react";
+import { motion } from "framer-motion";
 
 type Store = {
-    id: string;
-    name: string;
-    addressLine: string;
-    cityLine: string;
-    km: number;
-    img?: string;
-    pin: { x: number; y: number }; // map position (percent)
+  id: string;
+  name: string;
+  type: string;
+  address: string;
+  city: string;
+  state: string;
+  phone?: string;
+  hours: string;
+  pin: { x: number; y: number };
 };
 
 const STORES: Store[] = [
-    {
-        id: "s1",
-        name: "Hardware & Co",
-        addressLine: "VIA TAL DEI TALI 69, 00100",
-        cityLine: "ROME",
-        km: 3.5,
-        img: "/assets/Image/khfoodImage/Image-2.jpg", // replace if needed
-        pin: { x: 18, y: 18 },
-    },
-    {
-        id: "s2",
-        name: "Store of hardware",
-        addressLine: "VIA TAL DEI TALI 69, 00100",
-        cityLine: "ROME",
-        km: 3.5,
-        img: "/assets/Image/khfoodImage/Image-2.jpg",
-        pin: { x: 60, y: 16 },
-    },
-    {
-        id: "s3",
-        name: "New store",
-        addressLine: "VIA TAL DEI TALI 69, 00100",
-        cityLine: "ROME",
-        km: 3.5,
-        img: "/assets/Image/khfoodImage/Image-2.jpg",
-        pin: { x: 73, y: 34 },
-    },
-    {
-        id: "s4",
-        name: "Mega hardware store",
-        addressLine: "VIA TAL DEI TALI 69, 00100",
-        cityLine: "ROME",
-        km: 3.5,
-        img: "/assets/Image/khfoodImage/Image-2.jpg",
-        pin: { x: 55, y: 52 },
-    },
-    {
-        id: "s5",
-        name: "Ferramenta Store",
-        addressLine: "VIA TAL DEI TALI 69, 00100",
-        cityLine: "ROME",
-        km: 3.5,
-        img: "/assets/Image/khfoodImage/Image-2.jpg",
-        pin: { x: 26, y: 70 },
-    },
-    {
-        id: "s6",
-        name: "Roman Hardware",
-        addressLine: "VIA TAL DEI TALI 69, 00100",
-        cityLine: "ROME",
-        km: 3.5,
-        img: "/assets/Image/khfoodImage/Image-2.jpg",
-        pin: { x: 86, y: 78 },
-    },
+  {
+    id: "s1",
+    name: "KH Food HQ & Flagship Store",
+    type: "Flagship Store",
+    address: "585 Yorbita Rd.",
+    city: "La Puente",
+    state: "CA 91744",
+    phone: "(714) 639-1201",
+    hours: "Mon–Fri: 9AM – 5PM",
+    pin: { x: 15, y: 55 },
+  },
+  {
+    id: "s2",
+    name: "KH Food — Orange County",
+    type: "Retail Partner",
+    address: "1234 Harbor Blvd, Suite 100",
+    city: "Anaheim",
+    state: "CA 92801",
+    hours: "Mon–Sat: 10AM – 7PM",
+    pin: { x: 18, y: 60 },
+  },
+  {
+    id: "s3",
+    name: "KH Food — San Gabriel Valley",
+    type: "Retail Partner",
+    address: "818 Valley Blvd",
+    city: "Rosemead",
+    state: "CA 91770",
+    hours: "Daily: 9AM – 8PM",
+    pin: { x: 20, y: 52 },
+  },
+  {
+    id: "s4",
+    name: "KH Food — Los Angeles Chinatown",
+    type: "Authorized Distributor",
+    address: "750 N Hill St",
+    city: "Los Angeles",
+    state: "CA 90012",
+    hours: "Daily: 10AM – 6PM",
+    pin: { x: 22, y: 50 },
+  },
+  {
+    id: "s5",
+    name: "KH Food — Monterey Park",
+    type: "Retail Partner",
+    address: "501 W Garvey Ave",
+    city: "Monterey Park",
+    state: "CA 91754",
+    hours: "Mon–Sun: 9AM – 9PM",
+    pin: { x: 21, y: 53 },
+  },
+  {
+    id: "s6",
+    name: "KH Food — San Fernando Valley",
+    type: "Authorized Distributor",
+    address: "6200 Van Nuys Blvd",
+    city: "Van Nuys",
+    state: "CA 91401",
+    hours: "Mon–Sat: 9AM – 6PM",
+    pin: { x: 18, y: 46 },
+  },
 ];
 
-function formatKm(v: number) {
-    // show like screenshot: 3,5 KM
-    const s = v.toFixed(1).replace(".", ",");
-    return `${s} KM`;
-}
+const typeColors: Record<string, string> = {
+  "Flagship Store": "bg-amber-500 text-black",
+  "Retail Partner": "bg-slate-800 text-white",
+  "Authorized Distributor": "bg-amber-100 text-amber-900",
+};
 
-export default function Page() {
-    const [query, setQuery] = React.useState(
-        "Via Talenti, 358, 00100, Rome, RM, Italy"
+export default function StoreLocatorPage() {
+  const [activeId, setActiveId] = React.useState<string>("s1");
+  const [searchText, setSearchText] = React.useState("");
+
+  const activeStore = React.useMemo(
+    () => STORES.find((s) => s.id === activeId) || STORES[0],
+    [activeId]
+  );
+
+  const filteredStores = React.useMemo(() => {
+    const q = searchText.trim().toLowerCase();
+    if (!q) return STORES;
+    return STORES.filter(
+      (s) =>
+        s.name.toLowerCase().includes(q) ||
+        s.city.toLowerCase().includes(q) ||
+        s.state.toLowerCase().includes(q)
     );
-    const [city, setCity] = React.useState("Rome, RM, Italy");
-    const [distance, setDistance] = React.useState("distance");
-    const [activeId, setActiveId] = React.useState<string>("s1");
-    const [favorites, setFavorites] = React.useState<Record<string, boolean>>({
-        s1: false,
-        s2: false,
-        s3: false,
-        s4: false,
-        s5: false,
-        s6: false,
-    });
-    const [searchText, setSearchText] = React.useState("");
+  }, [searchText]);
 
-    const activeStore = React.useMemo(
-        () => STORES.find((s) => s.id === activeId) || STORES[0],
-        [activeId]
+  const openDirections = (store: Store) => {
+    const full = `${store.name}, ${store.address}, ${store.city}, ${store.state}`;
+    window.open(
+      `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(full)}`,
+      "_blank",
+      "noopener,noreferrer"
     );
+  };
 
-    const filteredStores = React.useMemo(() => {
-        const q = searchText.trim().toLowerCase();
-        if (!q) return STORES;
-        return STORES.filter(
-            (s) =>
-                s.name.toLowerCase().includes(q) ||
-                s.addressLine.toLowerCase().includes(q) ||
-                s.cityLine.toLowerCase().includes(q)
-        );
-    }, [searchText]);
-
-    const toggleFav = (id: string) =>
-        setFavorites((p) => ({ ...p, [id]: !p[id] }));
-
-    const openDirections = (store: Store) => {
-        const full = `${store.name}, ${store.addressLine}, ${store.cityLine}`;
-        const url = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-            full
-        )}`;
-        window.open(url, "_blank", "noopener,noreferrer");
-    };
-
-    const onSearch = () => {
-        // "working" demo: search inside list by query+city
-        const combined = `${query} ${city}`.trim();
-        setSearchText(combined);
-    };
-
-    return (
-        <>
-
-            {/* <section className="relative w-full" id="store-locator">
-        <div
-            className="relative min-h-[80vh] md:h-[90vh] w-full overflow-hidden pt-24 md:pt-20"
-            style={{
-            backgroundImage:
-                "url(https://khfood.com/wp-content/uploads/2019/11/Screen-Shot-2019-08-17-at-4.05.34-PM@1X.png)",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            }}
-        >
-
-            <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/50 to-black/20" />
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_25%,rgba(255,209,0,0.14),transparent_45%)]" />
-
-            <div className="relative z-10 mx-auto grid h-full max-w-7xl items-center gap-12 px-5 sm:px-6 lg:grid-cols-2">
-        
-            <div className="mx-auto max-w-xl text-center lg:mx-0 lg:text-left">
-                <p className="text-start text-sm uppercase tracking-[0.2em] text-white/80">
-                HOME · STORE LOCATOR
-                </p>
-
-                <h1 className="mt-4 text-start text-5xl font-semibold leading-[0.95] tracking-tight text-white sm:text-6xl md:text-[88px]">
-                Store Locator
-               
-                </h1>
-
-                <p className="mt-6 text-start text-sm leading-relaxed text-white/85 sm:text-base md:text-lg">
-                Search by city, zip code, or address to discover stores near you. Need
-                help? Contact us at{" "}
-                <span className="font-semibold text-white">(714) 639 - 1201</span> or{" "}
-                <span className="font-semibold text-white">contact@khfood.com</span>.
-                </p>
-
-               
-                <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center lg:justify-start">
-                <a
-                    href="#stores"
-                    className="inline-flex items-center justify-center rounded-full bg-[#FFD100] px-6 py-3 text-sm font-semibold text-black transition hover:brightness-95"
-                >
-                    Browse Stores
-                </a>
-
-                <a
-                    href="#map"
-                    className="inline-flex items-center justify-center rounded-full border border-white/35 bg-white/10 px-6 py-3 text-sm font-semibold text-white transition hover:bg-white/15"
-                >
-                    View Map
-                </a>
-                </div>
-
-             
-                <div className="mt-10 grid max-w-md grid-cols-2 gap-4 sm:grid-cols-3 lg:mx-0">
-                {[
-                    ["Search", "City / Zip"],
-                    ["Distance", "Nearby First"],
-                    ["Directions", "One Tap"],
-                ].map(([k, v]) => (
-                    <div
-                    key={k}
-                    className="rounded-2xl border border-white/15 bg-white/10 px-4 py-4 backdrop-blur"
-                    >
-                    <p className="text-[10px] uppercase tracking-[0.2em] text-white/70">
-                        {k}
-                    </p>
-                    <p className="mt-2 text-sm font-semibold text-white">{v}</p>
-                    </div>
-                ))}
-                </div>
-            </div>
-
-          
-            <div className="hidden lg:block">
-                <div className="relative h-[520px] w-full overflow-hidden rounded-[28px] border border-white/15 bg-white/5 shadow-[0_30px_120px_rgba(0,0,0,0.45)]">
-                <img
-                    src="https://images.unsplash.com/photo-1524661135-423995f22d0b?q=80&w=1600&auto=format&fit=crop"
-                    alt="Store locator map preview"
-                    className="h-full w-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/15 to-transparent" />
-
-                <div className="absolute bottom-6 left-6 right-6">
-                    <div className="rounded-2xl border border-white/15 bg-black/35 px-5 py-4 backdrop-blur">
-                    <p className="text-lg font-semibold text-white">
-                        “Find nearby stores in seconds.”
-                    </p>
-                    <p className="mt-1 text-sm tracking-wide text-white/70">
-                        Location search · Distance filter · Directions
-                    </p>
-                    </div>
-                </div>
-                </div>
-            </div>
-            </div>
-
-            
-            <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-b from-transparent to-white" />
+  return (
+    <div className="min-h-screen bg-[#fafafa]">
+      {/* ── HERO ─────────────────────────────────────────────────── */}
+      <section
+        className="relative w-full overflow-hidden pt-[112px]"
+        style={{
+          backgroundImage: "url('/assets/Image/bg-banner.png')",
+          backgroundRepeat: "no-repeat",
+          backgroundPosition: "center",
+          backgroundSize: "cover",
+        }}
+      >
+        <div className="mx-auto flex min-h-[280px] max-w-7xl items-center justify-center px-6 py-16 text-center">
+          <div>
+            <motion.p
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="mb-3 text-xs font-bold uppercase tracking-[0.3em] text-amber-700"
+            >
+              Find Us Near You
+            </motion.p>
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              className="text-4xl font-black uppercase tracking-tight text-slate-900 md:text-6xl"
+            >
+              Store Locator
+            </motion.h1>
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.3 }}
+              className="mt-4 text-slate-600"
+            >
+              Find KH Food products at a retailer near you.
+            </motion.p>
+          </div>
         </div>
-        </section> */}
+      </section>
 
-            <section className="relative w-full overflow-hidden pt-[120px]"
-                style={{ backgroundImage: "url('/assets/Image/bg-banner.png')", backgroundRepeat: 'no-repeat', backgroundPosition: 'center', backgroundSize: 'cover' }}>
-                <div className="mx-auto flex min-h-[260px] max-w-7xl items-center justify-center px-5 py-14 sm:px-6 md:min-h-[320px] md:py-20">
-                    <div className="text-center">
-                        <h1 className="text-3xl font-bold tracking-tight text-black md:text-5xl">
-                            STORE LOCATOR
-                        </h1>
-                        <div className="mt-3 flex items-center justify-center gap-2 text-sm text-black/70">
-                            <span className="hover:text-black">Home</span>
-                            <span className="text-black/40">›</span>
-                            <span className="text-black">Store Locator</span>
-                        </div>
+      {/* ── SEARCH + CONTENT ─────────────────────────────────────── */}
+      <section className="mx-auto max-w-7xl px-4 py-12">
+        {/* Search bar */}
+        <div className="mb-8 flex items-center gap-3 rounded-2xl bg-white p-3 shadow-md border border-slate-100">
+          <Search className="ml-2 h-5 w-5 text-slate-400 shrink-0" />
+          <input
+            value={searchText}
+            onChange={(e) => setSearchText(e.target.value)}
+            placeholder="Search by city, state, or store name..."
+            className="flex-1 bg-transparent text-sm text-slate-700 outline-none placeholder:text-slate-400"
+          />
+          {searchText && (
+            <button
+              onClick={() => setSearchText("")}
+              className="mr-1 text-xs font-semibold text-slate-400 hover:text-slate-700"
+            >
+              Clear
+            </button>
+          )}
+        </div>
+
+        <div className="grid gap-6 lg:grid-cols-12">
+          {/* ── STORE LIST ─── */}
+          <div className="lg:col-span-5 space-y-3 max-h-[620px] overflow-y-auto pr-1">
+            {filteredStores.length === 0 && (
+              <div className="py-16 text-center text-slate-400 text-sm">
+                No stores found. Try a different search term.
+              </div>
+            )}
+            {filteredStores.map((store) => (
+              <button
+                key={store.id}
+                onClick={() => setActiveId(store.id)}
+                className={`w-full text-left rounded-2xl p-5 border transition-all duration-200 ${
+                  store.id === activeId
+                    ? "bg-white border-amber-400 shadow-lg shadow-amber-100"
+                    : "bg-white border-slate-100 hover:border-slate-300"
+                }`}
+              >
+                <div className="flex items-start justify-between gap-3">
+                  <div className="min-w-0">
+                    <span
+                      className={`mb-2 inline-block rounded-full px-2.5 py-0.5 text-[10px] font-black uppercase tracking-widest ${
+                        typeColors[store.type] ?? "bg-slate-100 text-slate-700"
+                      }`}
+                    >
+                      {store.type}
+                    </span>
+                    <p className="font-bold text-slate-900 truncate">{store.name}</p>
+                    <p className="mt-1 text-sm text-slate-500">
+                      {store.address}, {store.city}, {store.state}
+                    </p>
+                    <div className="mt-2 flex items-center gap-1 text-xs text-slate-400">
+                      <Clock className="h-3.5 w-3.5" />
+                      {store.hours}
                     </div>
+                  </div>
+                  <div
+                    className={`mt-1 h-3 w-3 rounded-full shrink-0 ${
+                      store.id === activeId ? "bg-amber-500" : "bg-slate-200"
+                    }`}
+                  />
                 </div>
+              </button>
+            ))}
+          </div>
 
-                {/* <div className="h-[1px] w-full bg-black/10" /> */}
-            </section>
+          {/* ── MAP + DETAIL CARD ─── */}
+          <div className="lg:col-span-7">
+            {/* Map */}
+            <div className="relative h-[380px] w-full overflow-hidden rounded-3xl bg-slate-100 border border-slate-200 shadow-inner">
+              {/* Grid overlay */}
+              <div className="absolute inset-0 opacity-50 [background-image:linear-gradient(to_right,rgba(0,0,0,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.04)_1px,transparent_1px)] [background-size:40px_40px]" />
 
-            <div className="min-h-screen w-full relative overflow-hidden py-10">
-                {/* Background soft shapes (like image) */}
-                <div className="pointer-events-none absolute -top-40 -left-40 h-[560px] w-[560px] rounded-full bg-white/12 blur-3xl" />
-                <div className="pointer-events-none absolute top-0 right-[-240px] h-[560px] w-[560px] rounded-full bg-white/10 blur-3xl" />
-                <div className="pointer-events-none absolute bottom-[-280px] left-1/2 h-[620px] w-[620px] -translate-x-1/2 rounded-full bg-white/10 blur-3xl" />
+              {/* California outline placeholder */}
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="text-center text-slate-400">
+                  <MapPin className="mx-auto mb-2 h-10 w-10 text-amber-400" />
+                  <p className="text-sm font-semibold">California, USA</p>
+                  <p className="text-xs">Click a store to get directions</p>
+                </div>
+              </div>
 
-                <div className="mx-auto max-w-7xl px-4 py-10">
-                    {/* Main card */}
-                    <div className="rounded-[30px] bg-white shadow-[0_30px_90px_rgba(0,0,0,0.25)] p-8 md:p-10">
-                        {/* Title row */}
-                        {/* <div className="flex items-center justify-between">
-                <h1 className="text-[34px] leading-none font-semibold tracking-tight text-[#0B77C8]">
-                Store locator
-                </h1>
-
-                <Button
-                variant="ghost"
-                size="icon"
-                className="h-10 w-10 rounded-full border border-black/10 hover:bg-black/[0.03]"
-                onClick={() => setSearchText("")}
-                aria-label="Clear filters"
-                title="Clear filters"
+              {/* Store pins */}
+              {filteredStores.map((s) => (
+                <button
+                  key={s.id}
+                  onClick={() => setActiveId(s.id)}
+                  className="absolute -translate-x-1/2 -translate-y-1/2 group"
+                  style={{ left: `${s.pin.x}%`, top: `${s.pin.y}%` }}
+                  title={s.name}
                 >
-                {searchText ? (
-                    <X className="h-5 w-5 text-black/70" />
-                ) : (
-                    <SearchIcon className="h-5 w-5 text-black/70" />
-                )}
-                </Button>
-            </div> */}
-
-                        {/* Filters row */}
-                        <div className="mt-6 grid grid-cols-1 gap-4 lg:grid-cols-12">
-                            {/* Long input */}
-                            <div className="lg:col-span-7">
-                                <div className="relative">
-                                    <Input
-                                        value={query}
-                                        onChange={(e) => setQuery(e.target.value)}
-                                        className="h-12 rounded-full border-0 bg-black/[0.03] px-5 text-sm text-black/75 focus-visible:ring-0"
-                                        placeholder="Enter address..."
-                                    />
-                                </div>
-                            </div>
-
-                            {/* Right group */}
-                            <div className="lg:col-span-5 flex flex-col gap-4 sm:flex-row sm:items-center">
-                                <div className="flex-1 h-12 rounded-full bg-black/[0.03] px-4 flex items-center gap-3">
-                                    <Input
-                                        value={city}
-                                        onChange={(e) => setCity(e.target.value)}
-                                        className="h-10 border-0 bg-transparent px-2 text-sm text-black/75 focus-visible:ring-0"
-                                        placeholder="City..."
-                                    />
-
-                                    <Separator className="h-6 bg-black/10" />
-
-                                    <div className="min-w-[150px]">
-                                        <Select value={distance} onValueChange={setDistance}>
-                                            <SelectTrigger className="h-10 w-full border-0 bg-transparent px-2 text-xs font-semibold tracking-widest text-black/70 focus:ring-0">
-                                                <SelectValue placeholder="DISTANCE" />
-                                            </SelectTrigger>
-                                            <SelectContent align="end">
-                                                <SelectItem value="distance">DISTANCE</SelectItem>
-                                                <SelectItem value="5">5 KM</SelectItem>
-                                                <SelectItem value="10">10 KM</SelectItem>
-                                                <SelectItem value="25">25 KM</SelectItem>
-                                                <SelectItem value="50">50 KM</SelectItem>
-                                            </SelectContent>
-                                        </Select>
-                                    </div>
-                                </div>
-
-                                <Button
-                                    onClick={onSearch}
-                                    className="h-12 rounded-full bg-black px-8 text-xs font-semibold tracking-widest hover:bg-black/90"
-                                >
-                                    SEARCH
-                                </Button>
-                            </div>
-                        </div>
-
-                        {/* Content */}
-                        <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-12">
-                            {/* MAP */}
-                            <div className="lg:col-span-7">
-                                <div className="relative h-[520px] w-full rounded-3xl bg-[#f3f4f6] overflow-hidden">
-                                    {/* Map look background (no external map required) */}
-                                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(0,0,0,0.06),transparent_55%),radial-gradient(circle_at_70%_55%,rgba(0,0,0,0.05),transparent_55%)]" />
-                                    <div className="absolute inset-0 opacity-60 [background-image:linear-gradient(to_right,rgba(0,0,0,0.06)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.06)_1px,transparent_1px)] [background-size:44px_44px]" />
-
-                                    {/* Pins (clickable) */}
-                                    {filteredStores.map((s) => (
-                                        <button
-                                            key={s.id}
-                                            type="button"
-                                            onClick={() => setActiveId(s.id)}
-                                            className="absolute -translate-x-1/2 -translate-y-1/2"
-                                            style={{ left: `${s.pin.x}%`, top: `${s.pin.y}%` }}
-                                            aria-label={`Select ${s.name}`}
-                                            title={s.name}
-                                        >
-                                            <div
-                                                className={[
-                                                    "h-10 w-10 rounded-full flex items-center justify-center shadow-[0_10px_25px_rgba(0,0,0,0.18)] transition",
-                                                    s.id === activeId
-                                                        ? "bg-[#0B77C8] ring-4 ring-[#0B77C8]/20"
-                                                        : "bg-[#0B77C8]/95 hover:bg-[#0B77C8]",
-                                                ].join(" ")}
-                                            >
-                                                <MapPin className="h-5 w-5 text-white" />
-                                            </div>
-                                        </button>
-                                    ))}
-
-                                    {/* Big popup card (like screenshot) */}
-                                    <div className="absolute left-10 top-28 w-[360px] max-w-[86%] rounded-3xl bg-white shadow-[0_25px_70px_rgba(0,0,0,0.20)] overflow-hidden">
-                                        <div className="p-6">
-                                            <div className="text-[22px] font-semibold text-black/85">
-                                                {activeStore.name}
-                                            </div>
-                                            <div className="mt-1 text-[11px] font-semibold tracking-widest text-black/45">
-                                                {activeStore.addressLine} • {activeStore.cityLine}
-                                            </div>
-                                        </div>
-
-                                        <div className="px-6 pb-4">
-                                            <div className="h-[150px] w-full rounded-2xl overflow-hidden bg-black/[0.05] relative">
-                                                {/* replace with real store image */}
-                                                {activeStore.img ? (
-                                                    <>
-                                                        <img
-                                                            src={activeStore.img}
-                                                            alt={activeStore.name}
-                                                            className="absolute inset-0 h-full w-full object-cover"
-                                                        />
-                                                        <div className="absolute inset-0 bg-black/10" />
-                                                    </>
-                                                ) : (
-                                                    <div className="h-full w-full bg-[linear-gradient(135deg,rgba(11,119,200,0.22),rgba(0,0,0,0.06))]" />
-                                                )}
-                                            </div>
-                                        </div>
-
-                                        <div className="px-6 pb-5 flex items-center justify-between">
-                                            <div className="flex items-center gap-2 text-sm font-semibold text-black/70">
-                                                <MapPin className="h-4 w-4" />
-                                                {formatKm(activeStore.km)}
-                                            </div>
-
-                                            <Button
-                                                variant="outline"
-                                                className="h-10 rounded-full border-black/20 px-5 text-[11px] font-semibold tracking-widest text-black/70 hover:bg-black/[0.03]"
-                                                onClick={() => openDirections(activeStore)}
-                                            >
-                                                INDICATIONS <span className="ml-2 text-base leading-none">→</span>
-                                            </Button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {/* LIST */}
-                            <div className="lg:col-span-5">
-                                <div className="space-y-4">
-                                    {filteredStores.map((s) => (
-                                        <button
-                                            key={s.id}
-                                            type="button"
-                                            onClick={() => setActiveId(s.id)}
-                                            className={[
-                                                "w-full text-left rounded-2xl px-5 py-4 flex items-center justify-between transition",
-                                                "bg-black/[0.03] hover:bg-black/[0.05]",
-                                                s.id === activeId ? "ring-2 ring-[#0B77C8]/25" : "",
-                                            ].join(" ")}
-                                        >
-                                            <div className="min-w-0">
-                                                <div className="text-lg font-semibold text-black/85 truncate">
-                                                    {s.name}
-                                                </div>
-                                                <div className="mt-1 flex items-center gap-2 text-[11px] font-semibold tracking-widest text-black/45">
-                                                    <MapPin className="h-4 w-4" />
-                                                    <span className="truncate">
-                                                        {s.addressLine} • {s.cityLine}
-                                                    </span>
-                                                </div>
-                                            </div>
-
-                                            <div className="ml-4 flex items-center gap-5">
-                                                <div className="text-xs font-semibold text-black/65 whitespace-nowrap">
-                                                    <span><IoLocationOutline className="h-4 w-4" /></span>
-                                                    {formatKm(s.km)}
-                                                </div>
-
-                                                {/* <button
-                            type="button"
-                            onClick={(e) => {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            toggleFav(s.id);
-                            }}
-                            className="h-10 w-10 rounded-full bg-white border border-black/10 flex items-center justify-center hover:bg-black/[0.03] transition"
-                            aria-label="Toggle favorite"
-                            title="Favorite"
-                        >
-                            <Heart
-                            className={[
-                                "h-5 w-5 transition",
-                                favorites[s.id]
-                                ? "fill-[#0B77C8] text-[#0B77C8]"
-                                : "text-black/60",
-                            ].join(" ")}
-                            />
-                        </button> */}
-
-                                                <button
-                                                    type="button"
-                                                    onClick={(e) => {
-                                                        e.preventDefault();
-                                                        e.stopPropagation();
-                                                        openDirections(s);
-                                                    }}
-                                                    className="inline-flex items-center gap-2 text-[11px] font-semibold tracking-widest text-black/60 hover:text-black transition"
-                                                    aria-label="Open directions"
-                                                    title="Directions"
-                                                >
-                                                    <Navigation2 className="h-5 w-5" />
-                                                    INDICATIONS
-                                                </button>
-                                            </div>
-                                        </button>
-                                    ))}
-                                </div>
-
-
-                            </div>
-                        </div>
-
-                        {/* small footer spacing like screenshot */}
-                        <div className="mt-2" />
-                    </div>
-                </div>
+                  <div
+                    className={`h-9 w-9 rounded-full flex items-center justify-center shadow-lg transition-all duration-200 ${
+                      s.id === activeId
+                        ? "bg-amber-500 scale-125 ring-4 ring-amber-200"
+                        : "bg-slate-800 hover:bg-amber-500 hover:scale-110"
+                    }`}
+                  >
+                    <MapPin className="h-4 w-4 text-white" />
+                  </div>
+                </button>
+              ))}
             </div>
 
+            {/* Active store detail card */}
+            <motion.div
+              key={activeStore.id}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="mt-4 rounded-3xl bg-white border border-slate-100 shadow-md p-6"
+            >
+              <div className="flex items-start justify-between gap-4">
+                <div>
+                  <span
+                    className={`mb-2 inline-block rounded-full px-3 py-1 text-[10px] font-black uppercase tracking-widest ${
+                      typeColors[activeStore.type] ?? "bg-slate-100 text-slate-700"
+                    }`}
+                  >
+                    {activeStore.type}
+                  </span>
+                  <h3 className="text-xl font-black text-slate-900">
+                    {activeStore.name}
+                  </h3>
+                  <p className="mt-1 text-sm text-slate-500">
+                    {activeStore.address}, {activeStore.city}, {activeStore.state}
+                  </p>
+                </div>
+                <button
+                  onClick={() => openDirections(activeStore)}
+                  className="shrink-0 flex items-center gap-2 rounded-full bg-slate-900 px-5 py-2.5 text-xs font-black uppercase tracking-widest text-white hover:bg-amber-500 hover:text-black transition-colors"
+                >
+                  <Navigation2 className="h-4 w-4" />
+                  Directions
+                </button>
+              </div>
 
-        </>
-    );
+              <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3">
+                {activeStore.phone && (
+                  <div className="flex items-center gap-2 text-sm text-slate-600">
+                    <Phone className="h-4 w-4 text-amber-500 shrink-0" />
+                    {activeStore.phone}
+                  </div>
+                )}
+                <div className="flex items-center gap-2 text-sm text-slate-600">
+                  <Clock className="h-4 w-4 text-amber-500 shrink-0" />
+                  {activeStore.hours}
+                </div>
+                <div className="flex items-center gap-2 text-sm text-slate-600">
+                  <Mail className="h-4 w-4 text-amber-500 shrink-0" />
+                  contact@khfood.com
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── CONTACT STRIP ─────────────────────────────────────────── */}
+      <section className="bg-slate-900 py-16 text-white">
+        <div className="mx-auto max-w-5xl px-6 text-center">
+          <p className="mb-2 text-xs font-black uppercase tracking-[0.3em] text-amber-400">
+            Can't Find a Store?
+          </p>
+          <h2 className="text-3xl font-black md:text-5xl">
+            We Ship Directly To You
+          </h2>
+          <p className="mt-4 text-slate-400">
+            Order online and receive fresh KH Food products at your doorstep.
+          </p>
+          <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+            <a
+              href="/en/products/domestic"
+              className="rounded-full bg-amber-500 px-8 py-3 font-black uppercase tracking-widest text-black hover:bg-amber-400 transition-colors"
+            >
+              Shop Online
+            </a>
+            <a
+              href="/en/contact-us"
+              className="rounded-full border border-white/20 px-8 py-3 font-black uppercase tracking-widest text-white hover:border-white/60 transition-colors"
+            >
+              Contact Us
+            </a>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
 }

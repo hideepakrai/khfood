@@ -61,7 +61,7 @@ const products: Product[] = [
 /* MAIN SECTION                                                               */
 /* -------------------------------------------------------------------------- */
 
-export default function BrowseKHFoodProducts() {
+export default function ProductGrid() {
   return (
     <section className="bg-neutral-50 py-24">
       <div className="max-w-7xl mx-auto ">

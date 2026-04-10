@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 import {
   buildCustomerIdCandidates,
   clearCustomerAuthCookie,
-  payloadTokenCookieName,
+  authTokenCookieName,
   verifyCustomerSessionToken,
 } from "@/data/storefront/customerAccounts";
 import { getMongoDb } from "@/data/mongo/client";
@@ -15,7 +15,7 @@ export async function POST() {
 
   try {
     const cookieStore = await cookies();
-    const token = cookieStore.get(payloadTokenCookieName)?.value;
+    const token = cookieStore.get(authTokenCookieName)?.value;
 
     if (!token) {
       return response;

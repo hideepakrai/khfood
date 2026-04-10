@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Link } from "@/i18n/routing";
+import Link from "next/link";
 
 export default function AdminPagesPage() {
   const [pages, setPages] = useState<any[]>([]);

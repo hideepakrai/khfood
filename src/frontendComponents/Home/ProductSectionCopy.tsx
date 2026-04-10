@@ -109,14 +109,14 @@ const ProductSectionRight: React.FC = () => {
               <div className="absolute inset-0 bg-black/55" />
             </div>
 
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
 
             <div className="relative flex flex-col justify-between h-full p-8 md:p-10">
               <div className="mt-4">
                 <h2 className="font-heading text-[32px] md:text-[40px] font-bold leading-[1.1] max-w-sm text-white">
-                  Product Ship 
-                  <br />
-                  International 
+                  Product Ship International  
+                  {/* <br /> */}
+                  
                   <br />
                   <span className="italic font-medium opacity-90">(Taiwan)</span>
                 </h2>

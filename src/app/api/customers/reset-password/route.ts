@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { getMongoDb } from "@/data/mongo/client";
-import { hashPayloadPassword } from "@/utilities/auth";
+import { hashPassword } from "@/utilities/auth";
 
 export async function POST(req: Request) {
   try {
@@ -24,7 +24,7 @@ export async function POST(req: Request) {
     }
 
     // Hash the new password using our Payload-compatible utility
-    const { hash, salt } = hashPayloadPassword(password);
+    const { hash, salt } = hashPassword(password);
 
     // Update the record and remove reset fields
     await db.collection(targetCollection).updateOne(

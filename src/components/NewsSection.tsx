@@ -62,7 +62,7 @@ export default function NewsSection() {
               },
             ].map((item, index) => (
               <div key={index} className="flex flex-col gap-4 sm:flex-row sm:gap-5">
-                <div className="relative h-[180px] w-full flex-shrink-0 overflow-hidden rounded-xl sm:h-28 sm:w-44 md:h-32 md:w-[445px]">
+                <div className="relative h-[180px] w-full flex-shrink-0 overflow-hidden rounded-xl sm:h-28 sm:w-44 md:h-32 ">
                   <img
                     src={item.img}
                     alt={item.title}
