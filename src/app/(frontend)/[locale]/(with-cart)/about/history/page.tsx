@@ -84,6 +84,7 @@ const Page = () => {
     offset: ["start start", "end end"],
   });
 
+
   const heroImageY = useTransform(scrollYProgress, [0, 0.5], [0, 200]);
 
   return (
@@ -91,12 +92,12 @@ const Page = () => {
       <AboutPageHeader />
       
       {/* Immersive Heritage Hero */}
-      <section className="relative h-[85vh] flex items-center justify-center overflow-hidden">
+      {/* <section className="relative h-[85vh] flex items-center justify-center overflow-hidden">
         <motion.div 
           style={{ y: heroImageY }}
           className="absolute inset-0 z-0"
         >
-          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/20 to-[#fffcf9] z-10" />
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent" />
           <img 
             src="https://khfood.com/wp-content/uploads/2019/11/2Q6A4622-3-scaled.jpg" 
             alt="KH Food Heritage"
@@ -128,6 +129,7 @@ const Page = () => {
             OUR <span className="text-[#ecb984]">HISTORY</span>
           </motion.h1>
           
+
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -137,7 +139,58 @@ const Page = () => {
             From a California Kitchen to the World
           </motion.p>
         </div>
-      </section>
+      </section> */}
+
+           {/* Hero Section - Minimalist & Premium */}
+            <section 
+              className="relative h-[70vh] pt-16 flex items-center justify-center overflow-hidden bg-slate-900">
+              <div className="absolute inset-0 opacity-25">
+                <img 
+                  src="https://khfood.com/wp-content/uploads/2019/11/2Q6A4971.jpg" 
+                  className="w-full h-full object-cover"
+                  alt="Nutrition Background"
+                />
+              </div>
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent" />
+              
+              <div className="relative z-10 text-center text-white px-4">
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 1 }}
+                  className="inline-block px-6 py-2 rounded-full border border-white/30 backdrop-blur-md mb-8"
+                >
+                  <p className="text-[#ecb984] uppercase tracking-[0.5em] text-[10px] md:text-xs font-black">
+                  OUR HISTORY
+                  </p>
+                </motion.div>
+                
+                <motion.h1 
+                  initial={{ opacity: 0, y: 40 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+                  className="font-heading font-bold uppercase text-white leading-[0.95] text-[48px] sm:text-[80px] md:text-[110px] lg:text-[120px] tracking-tight"
+                  style={{ 
+                    textShadow: "0 10px 40px rgba(0,0,0,0.4)"
+                  }}
+                >
+                 OUR HISTORY
+                </motion.h1>
+
+
+                   <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1, delay: 0.8 }}
+            className="mt-12 text-lg md:text-xl font-medium tracking-widest uppercase text-white/80"
+          >
+            From a California Kitchen to the World
+          </motion.p>
+
+              </div>
+            </section>
+
+
 
       {/* The Origin Story */}
       <section className="py-24 md:py-40 bg-white relative">

@@ -19,10 +19,10 @@ const NutritionPage = () => {
     <div className="min-h-screen bg-[#fffcf9] text-slate-900 overflow-hidden">
       <AboutPageHeader />
 
+
       {/* Hero Section - Minimalist & Premium */}
       <section 
-        className="relative h-[60vh] flex items-center justify-center overflow-hidden bg-slate-900"
-      >
+        className="relative h-[60vh] flex items-center justify-center overflow-hidden bg-slate-900">
         <div className="absolute inset-0 opacity-25">
           <img 
             src="https://khfood.com/wp-content/uploads/2019/11/2Q6A4971.jpg" 
@@ -57,6 +57,7 @@ const NutritionPage = () => {
           </motion.h1>
         </div>
       </section>
+      
       
       {/* Philosophy Section */}
       <section className="py-24 md:py-32 bg-white relative overflow-hidden">
