@@ -23,8 +23,9 @@ type Props = {
 
 export const dynamic = "force-dynamic";
 
-export default async function AccountPage({ params }: Props) {
-  const { locale } = await params;
+export default async function AccountPage(props: Props) {
+  const params = await props.params;
+  const locale = params?.locale || "en";
   setRequestLocale(locale);
 
   const user = await getCustomer();

@@ -25,7 +25,8 @@ export async function GET() {
     return NextResponse.json({ 
         docs: products.map(p => ({
             ...p,
-            id: p._id.toString()
+            id: p._id.toString(),
+            title: typeof p.title === 'object' ? (p.title.en || p.title.hr || Object.values(p.title)[0]) : p.title
         }))
     }, { status: 200 });
 

@@ -21,7 +21,36 @@ const ProductAdminDetailPage = async ({
   }
 
   const { id } = await params;
-  const productData = await getAdminProductById({ id });
+  
+  let productData;
+  if (id === "new") {
+    productData = {
+      product: {
+        id: "new",
+        title: "",
+        slug: "",
+        _status: "draft",
+        stock: 0,
+        weight: 0,
+        Highlight: "",
+        images: [],
+        variants: [],
+      },
+      summary: {
+        inventory: 0,
+        imageCount: 0,
+        priceMin: null,
+        priceMax: null,
+        priceCurrency: "USD",
+        variantCount: 0,
+        categoryTitles: [],
+        subcategoryTitles: [],
+        titleEn: "",
+      }
+    };
+  } else {
+    productData = await getAdminProductById({ id });
+  }
 
   if (!productData) {
     notFound();
@@ -35,7 +64,9 @@ const ProductAdminDetailPage = async ({
         <header className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
           <div className="space-y-2">
             <p className="text-sm uppercase tracking-[0.3em] text-slate-500">Admin Products</p>
-            <h1 className="text-3xl font-semibold text-slate-900">{product.title}</h1>
+            <h1 className="text-3xl font-semibold text-slate-900">
+              {id === "new" ? "Add New Product" : product.title}
+            </h1>
             <p className="text-sm text-slate-600">
               Core product fields are editable here. Rich content, media, and advanced variants still live in the legacy editor for now.
             </p>
@@ -222,8 +253,10 @@ const ProductAdminDetailPage = async ({
           <div className="space-y-6">
             <Card>
               <CardHeader>
-                <CardTitle>Quick Edit</CardTitle>
-                <CardDescription>Safe fields we can manage without the legacy Payload form.</CardDescription>
+                <CardTitle>{id === "new" ? "Product Details" : "Quick Edit"}</CardTitle>
+                <CardDescription>
+                  {id === "new" ? "Enter the basic information for your new product." : "Safe fields we can manage without the legacy Payload form."}
+                </CardDescription>
               </CardHeader>
               <CardContent>
                 <AdminProductForm

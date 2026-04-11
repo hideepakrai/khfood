@@ -48,10 +48,13 @@ export const AdminProductForm = ({
     setIsSaving(true);
     setMessage("");
 
+    const isNew = id === "new";
+
     try {
-      await axios.patch(
-        `/api/admin/products/${id}`,
-        {
+      const response = await axios({
+        method: isNew ? "post" : "patch",
+        url: isNew ? "/api/admin/products" : `/api/admin/products/${id}`,
+        data: {
           highlight,
           slug,
           status,
@@ -59,18 +62,22 @@ export const AdminProductForm = ({
           title,
           weight: canEditWeight ? weight : undefined,
         },
-        {
-          withCredentials: true,
-        },
-      );
+        withCredentials: true,
+      });
 
-      setMessage("Product updated.");
-      router.refresh();
+      if (isNew) {
+        const newId = response.data.product.product.id;
+        setMessage("Product created successfully.");
+        router.push(`/admin/products/${newId}`);
+      } else {
+        setMessage("Product updated.");
+        router.refresh();
+      }
     } catch (error) {
       if (isAxiosError(error)) {
-        setMessage((error.response?.data as { message?: string } | undefined)?.message ?? "Failed to update product.");
+        setMessage((error.response?.data as { message?: string } | undefined)?.message ?? `Failed to ${isNew ? "create" : "update"} product.`);
       } else {
-        setMessage("Failed to update product.");
+        setMessage(`Failed to ${isNew ? "create" : "update"} product.`);
       }
     } finally {
       setIsSaving(false);

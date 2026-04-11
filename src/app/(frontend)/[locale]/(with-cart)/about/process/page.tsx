@@ -88,7 +88,7 @@ const Page = () => {
               alt="Process Background"
             />
           </motion.div>
-          <div className="absolute inset-0 bg-gradient-to-b from-slate-900/40 via-transparent to-slate-50" />
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent" />
         </div>
 
         <div className="relative z-10 text-center px-6 max-w-4xl">
@@ -106,21 +106,21 @@ const Page = () => {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-            className="font-heading font-bold uppercase text-white leading-[0.95] text-[48px] sm:text-[80px] md:text-[110px] lg:text-[120px] tracking-tight"
+            className="font-heading font-bold uppercase text-white leading-[0.95] text-[48px] sm:text-[80px] md:text-[110px] lg:text-[100px] tracking-tight"
             style={{ 
               textShadow: "0 10px 40px rgba(0,0,0,0.4)"
             }}
           >
             FARM TO  <span className="text-[#ecb984]">HOME</span>
           </motion.h1>
-          <p className="mt-8 text-lg md:text-xl text-slate-600 font-medium max-w-2xl mx-auto">
+          <p className="mt-8 text-lg md:text-xl text-white font-medium max-w-2xl mx-auto">
             Experience the journey of the perfect peanut. From sunlight and soil to your kitchen table.
           </p>
           <div className="mt-12 flex justify-center">
             <motion.div 
               animate={{ y: [0, 10, 0] }}
               transition={{ duration: 2, repeat: Infinity }}
-              className="w-10 h-10 rounded-full border border-slate-200 flex items-center justify-center text-slate-400"
+              className="w-10 h-10 rounded-full border border-slate-200 flex items-center justify-center text-white"
             >
               <ChevronDown className="w-5 h-5" />
             </motion.div>

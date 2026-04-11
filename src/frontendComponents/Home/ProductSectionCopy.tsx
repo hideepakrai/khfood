@@ -12,7 +12,11 @@ type Product = {
   badge?: string;
 };
 
-const products: Product[] = [
+type Props = {
+  products?: Product[];
+};
+
+const defaultProducts: Product[] = [
   {
     id: 1,
     title: "Roasted Peanuts: 8 Packs (Taiwan)",
@@ -43,14 +47,15 @@ const products: Product[] = [
   },
 ];
 
-const ProductSectionRight: React.FC = () => {
+const ProductSectionRight: React.FC<Props> = ({ products = [] }) => {
+  const displayProducts = products.length > 0 ? products : defaultProducts;
   return (
     <section className="w-full bg-white py-16">
       <div className="w-full max-w-[1440px] mx-auto px-6 md:px-12 lg:px-20">
         <div className="flex flex-col-reverse lg:flex-row gap-8 lg:gap-10 items-stretch">
           {/* LEFT SIDE: PRODUCTS GRID */}
           <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-6">
-            {products.map((product) => (
+            {displayProducts.map((product) => (
               <Link key={product.id} href="/products/single" className="block">
                 {/* ✅ Make card image full width, and content OVER image */}
                 <article className="group relative rounded-2xl overflow-hidden bg-[#f7f7f7] h-[350px] sm:h-[350px]">

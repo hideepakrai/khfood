@@ -77,7 +77,7 @@ export default function NewsSection() {
               key={index}
               className="flex flex-col sm:flex-row gap-4 sm:gap-5"
             >
-              <div className="relative w-full sm:w-44 md:w-[445px] h-[180px] sm:h-28 md:h-32 flex-shrink-0 overflow-hidden rounded-xl">
+              <div className="relative w-full sm:w-44 md:w-[200px] h-[180px] sm:h-28 md:h-32 flex-shrink-0 overflow-hidden rounded-xl">
                 <Image
                   src={item.img}
                   alt="Blog"
@@ -85,11 +85,9 @@ export default function NewsSection() {
                   className="object-cover"
                 />
               </div>
-
-              <div>
+                <div>
                 <p className="text-xs text-gray-500">
-                  BY KH FOOD TEAM • 15TH JAN 2026
-                </p>
+                  BY KH FOOD TEAM • 15TH JAN 20260.........................</p>
 
                 <h4 className="font-medium text-[15px] sm:text-[16px]  md:text-[16px] mt-1">
                   {item.title}

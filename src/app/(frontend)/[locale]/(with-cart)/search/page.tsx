@@ -18,9 +18,11 @@ type SearchPageProps = {
   searchParams: Promise<{ search: string }>;
 };
 
-const SearchPage = async ({ params, searchParams }: SearchPageProps) => {
-  const { locale } = await params;
-  const { search } = await searchParams;
+const SearchPage = async (props: SearchPageProps) => {
+  const params = await props.params;
+  const searchParams = await props.searchParams;
+  const locale = params?.locale || "en";
+  const search = searchParams?.search || "";
   
   // For dynamic pages, we still need setRequestLocale
   setRequestLocale(locale);
