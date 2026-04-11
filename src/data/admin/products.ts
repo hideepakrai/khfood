@@ -288,6 +288,71 @@ const mergeLocalizedValue = ({
   };
 };
 
+export const createAdminProduct = async ({
+  highlight,
+  slug,
+  status = "draft",
+  stock = 0,
+  title,
+  weight = 0,
+}: {
+  highlight?: string;
+  slug: string;
+  status?: Product["_status"];
+  stock?: number;
+  title: string;
+  weight?: number;
+}) => {
+  const administrator = await getAuthenticatedAdministrator();
+
+  if (!administrator) {
+    throw new Error("Unauthorized");
+  }
+
+  const normalizedTitle = title.trim();
+  const normalizedSlug = slug.trim();
+
+  if (!normalizedTitle) {
+    throw new Error("Title is required");
+  }
+
+  if (!normalizedSlug) {
+    throw new Error("Slug is required");
+  }
+
+  const db = await getMongoDb();
+
+  // Check if slug already exists
+  const existingProduct = await db.collection("products").findOne({ slug: normalizedSlug });
+  if (existingProduct) {
+    throw new Error("A product with this slug already exists");
+  }
+
+  const now = new Date().toISOString();
+  const newProduct: RawProduct = {
+    _status: status,
+    Highlight: highlight?.trim() ? { [defaultLocale]: highlight.trim() } : null,
+    createdAt: now,
+    enableVariants: false,
+    enableVariantPrices: false,
+    enableVariantWeights: false,
+    pricing: [],
+    slug: normalizedSlug,
+    stock: stock ?? 0,
+    title: { [defaultLocale]: normalizedTitle },
+    updatedAt: now,
+    weight: weight ?? 0,
+    images: [],
+    variants: [],
+    categoriesArr: [],
+  };
+
+  const result = await db.collection("products").insertOne(newProduct);
+  const insertedId = result.insertedId.toString();
+
+  return getAdminProductById({ id: insertedId, locale: defaultLocale });
+};
+
 export const updateAdminProduct = async ({
   highlight,
   id,

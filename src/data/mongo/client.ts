@@ -24,7 +24,7 @@ export const getMongoDb = async () => {
 
   try {
     const client = await mongoClientPromise;
-    const dbName = process.env.MONGODB_DB_NAME || "khfoods";
+    const dbName = process.env.TENANT_DB_NAME || process.env.MONGODB_DB_NAME || "khfoods";
     console.log(`[DB] Using database name: ${dbName}`);
     
     const db = client.db(dbName);

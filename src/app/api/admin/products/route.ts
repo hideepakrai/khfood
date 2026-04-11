@@ -1,17 +1,17 @@
 import { NextResponse } from "next/server";
-import { AdminRepository } from "@/lib/admin-repository";
+import { getAdminProducts, createAdminProduct } from "@/data/admin/products";
+import type { Product } from "@/types/cms";
 
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
-    const query = searchParams.get("q") ? { title: new RegExp(searchParams.get("q")!, "i") } : {};
-    const limit = Number(searchParams.get("limit") || 50);
-    const skip = Number(searchParams.get("skip") || 0);
+    const query = searchParams.get("q") || "";
+    const status = searchParams.get("status") || "all";
+    const limit = Number(searchParams.get("limit") || 30);
 
-    const products = await AdminRepository.find("products", query, { limit, skip, sort: { updatedAt: -1 } });
-    const total = await AdminRepository.count("products", query);
+    const products = await getAdminProducts({ limit, query, status });
 
-    return NextResponse.json({ products, total }, { status: 200 });
+    return NextResponse.json({ products }, { status: 200 });
   } catch (error) {
     console.error("Admin products fetch error:", error);
     return NextResponse.json({ message: "Internal server error" }, { status: 500 });
@@ -20,17 +20,22 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   try {
-    const data = await request.json();
+    const body = await request.json();
     
-    // Basic validation
-    if (!data.title) {
-       return NextResponse.json({ message: "Title is required" }, { status: 400 });
-    }
+    // Basic validation is handled inside createAdminProduct
+    const updatedProduct = await createAdminProduct({
+      highlight: body.highlight,
+      slug: body.slug,
+      status: body.status as Product["_status"] | undefined,
+      stock: body.stock,
+      title: body.title,
+      weight: body.weight,
+    });
 
-    const product = await AdminRepository.create("products", data);
-    return NextResponse.json({ product }, { status: 201 });
+    return NextResponse.json({ product: updatedProduct }, { status: 201 });
   } catch (error) {
     console.error("Admin product create error:", error);
-    return NextResponse.json({ message: "Internal server error" }, { status: 500 });
+    const message = error instanceof Error ? error.message : "Internal server error";
+    return NextResponse.json({ message }, { status: message.includes("exists") || message.includes("required") ? 400 : 500 });
   }
 }
